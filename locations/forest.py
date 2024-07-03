@@ -61,16 +61,26 @@ def play(bot, user):
             user["action"] = "play"
         elif user["action"] == "tree":
             bot.send_message(user["id"], "Теперь вы гамаете на дереве")
+            if random.randint(2, 7) == 5:
+                bot.send_message(user["id"], "Пока вы доставали телефон, вы не удержали равновесие и упали. Теперь вы гамаете возле дерева.")
+                user["fun"] -= 30
+                user["action"] = "play"
+                if user["fun"] <0:
+                    user["fun"] = 0
+
             user["action"] = "play on tree"
         user["fun"] += 10
         if user["fun"] > 100:
             user["fun"] = 100
-        if random.randint(4, 7) == 5:
-            bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием и збрала бейджик")
-            user["fun"] -= 50
-            if user["fun"] < 0:
-                user["fun"] = 0
+        if user["action"] == "play":
+            if random.randint(4, 7) == 5:
+                bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием и збрала бейджик")
+                user["fun"] -= 50
+                if user["fun"] < 0:
+                    user["fun"] = 0
 
+    else:
+        bot.send_message(user["id"], "Вы и так гамаете")
 
 def stop(bot, user):
     if user["action"] == "play" or user["action"] == "play on tree":
