@@ -1,2 +1,4 @@
 config.py
 .idea
+__pycache__
+locations/__pycache__
