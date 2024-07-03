@@ -1,7 +1,7 @@
 import telebot
 from config import TOKEN
 import random
-from locations import room, street, balcony, basement
+from locations import room, street, balcony, basement, forest
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -17,6 +17,9 @@ locations = {
 
     },
     "basement": {
+
+    },
+    "forest": {
 
     }
 }
