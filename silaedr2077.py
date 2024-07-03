@@ -1,7 +1,7 @@
 import telebot
 from config import TOKEN
 import random
-from locations import room, street
+from locations import room, street, basement
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -12,12 +12,16 @@ locations = {
     },
     "street": {
 
+    }, 
+    "basement" : {
+
     }
 }
 
 modules = {
     "room": room,
-    "street": street
+    "street": street, 
+    "basement" : basement
 }
 
 def add_user(message):
@@ -47,6 +51,10 @@ def process_message(message):
     user = users[message.from_user.id]
 
     if message.text.startswith("/") and message.text.strip('/') in locations:
+        module = modules[user["location"]]
+        all_users = list(filter(lambda x: x["location"] == user["location"], users.values()))
+        location = locations[user["location"]]
+        module.leave(bot, user, all_users, location)
         location_name = message.text.strip('/')
         user["location"] = location_name
 
