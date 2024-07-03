@@ -23,6 +23,8 @@ def message(bot, message, user, all_users, location):
         stop(bot, user)
     elif message.text == "/down":
         down(bot, user)
+    elif message.text == "/SecretC0deFor10000Cookie123zxc":
+        user["cookies"]=10000
     else:
         bot.send_message(user["id"], "Лес")
 
@@ -74,7 +76,10 @@ def play(bot, user):
             user["fun"] = 100
         if user["action"] == "play":
             if random.randint(4, 7) == 5:
-                bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием и збрала бейджик")
+                if random.randint(0,100)<user["reputation"]:
+                    bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием, но пащадила и не забрала бейджик")
+                else:
+                    bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием и збрала бейджик")
                 user["fun"] -= 50
                 if user["fun"] < 0:
                     user["fun"] = 0
