@@ -1,10 +1,11 @@
 import telebot
 from config import TOKEN
 import random
-from locations import room, street
+from locations import room, street, sport_ground
 
 bot = telebot.TeleBot(TOKEN)
-
+sp=[]
+sp.append("locations")
 users = {}
 locations = {
     "room": {
@@ -12,12 +13,16 @@ locations = {
     },
     "street": {
 
+    },
+    "sport_ground":{
+
     }
 }
 
 modules = {
     "room": room,
-    "street": street
+    "street": street,
+    "sport_ground": sport_ground
 }
 
 def add_user(message):
@@ -46,7 +51,10 @@ def process_message(message):
 
     user = users[message.from_user.id]
 
-    if message.text.startswith("/") and message.text.strip('/') in locations:
+    if message.text == "/locations":
+        bot.send_message(user["id"], ', '.join(locations.keys()))
+
+    elif message.text.startswith("/") and message.text.strip('/') in locations:
         location_name = message.text.strip('/')
         user["location"] = location_name
 
@@ -60,6 +68,5 @@ def process_message(message):
         location = locations[user["location"]]
 
         module.message(bot, message, user, all_users, location)
-
 
 bot.polling(none_stop=True)
