@@ -21,7 +21,7 @@ locations = {
     },
     "forest": {
 
-    }
+    },
     "swamp":{
 
     }
@@ -31,7 +31,7 @@ modules = {
     "room": room,
     "balcony": balcony,
     "street": street,
-    "basement": basement
+    "basement": basement,
     "swamp": swamp
 }
 
