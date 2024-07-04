@@ -25,7 +25,7 @@ tennisgamemarkup.add(item1, item2, item3)
 
 usersData = {}
 
-def enter(bot, user, all_users, location):
+def enter(bot, user, all_users):
     if user["id"] not in usersData:
         bot.send_message(user["id"], f"Вижу ты тут впервые, ну чтож, думаю сам разберешся)\nСейчас здесь тусуется {len(all_users)} игроков", reply_markup=basemarkup)
     else:
@@ -42,10 +42,10 @@ def enter(bot, user, all_users, location):
     
     
 
-def leave(bot, user, all_users, location):
+def leave(bot, user, all_users):
     bot.send_message(user["id"], "Ты вышел из подвала :(")
 
-def checkShielder(bot, message, user, all_users, location):
+def checkShielder(bot, message, user, all_users):
     if usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["attackChoice"] in usersData[user["id"]]["shieldChoice"]:
         score = [usersData[user["id"]]["score"][0], usersData[user["id"]]["score"][1]]
         bot.send_message(user["id"], f"Ты успешно отбил удар\nСчет {score[0]}:{score[1]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
@@ -72,7 +72,7 @@ def checkShielder(bot, message, user, all_users, location):
             bot.send_message(usersData[user["id"]]["playtennisConnection"]["id"], f"Ты забил\nСчет {score[1]}:{score[0]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
             usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 
-def checkAttacker(bot, message, user, all_users, location):
+def checkAttacker(bot, message, user, all_users):
     if usersData[user["id"]]["attackChoice"] in usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["shieldChoice"]:
         score = [usersData[user["id"]]["score"][0], usersData[user["id"]]["score"][1]]
         bot.send_message(user["id"], f"Противник отбил твой удар\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешься", reply_markup=tennisgamemarkup)
@@ -99,7 +99,7 @@ def checkAttacker(bot, message, user, all_users, location):
             bot.send_message(usersData[user["id"]]["playtennisConnection"]["id"], f"Тебе забили\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
             usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 
-def message(bot, message, user, all_users, location):
+def message(bot, message, user, all_users):
     # pingpongMainGame
     # waiting
     try:
@@ -135,7 +135,7 @@ def message(bot, message, user, all_users, location):
                         usersData[user["id"]]["stage"] = 5
                         usersData[user["id"]]["turn"] *= -1
                     else:
-                        checkShielder(bot, message, user, all_users, location)
+                        checkShielder(bot, message, user, all_users)
                         usersData[user["id"]]["turn"] *= -1
                 else:
                     bot.send_message(user["id"], "Выбери еще одно место для защиты")
@@ -152,7 +152,7 @@ def message(bot, message, user, all_users, location):
                         usersData[user["id"]]["stage"] = 5
                         usersData[user["id"]]["turn"] *= -1
                 else:
-                    checkAttacker(bot, message, user, all_users, location)
+                    checkAttacker(bot, message, user, all_users)
                     usersData[user["id"]]["turn"] *= -1
 
         
@@ -241,5 +241,5 @@ def message(bot, message, user, all_users, location):
     except:
         print("error :)")
 
-def events(bot, all_users, location):
+def events(bot, all_users):
     pass

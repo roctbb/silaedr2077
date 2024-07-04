@@ -1,7 +1,7 @@
 import random
 
 
-def enter(bot, user, all_users, location):
+def enter(bot, user, all_users):
     bot.send_message(user["id"], '''Вы зашли в лес
     /climb залезть на дерево
     /play начать гамать
@@ -10,11 +10,11 @@ def enter(bot, user, all_users, location):
     ''')
 
 
-def leave(bot, user, all_users, location):
+def leave(bot, user, all_users):
     pass
 
 
-def message(bot, message, user, all_users, location):
+def message(bot, message, user, all_users):
     if message.text == "/climb":
         climb(bot, user)
     elif message.text == "/play":
@@ -30,7 +30,7 @@ def message(bot, message, user, all_users, location):
         bot.send_message(user["id"], "Лес")
 
 
-def events(bot, all_users, location):
+def events(bot, all_users):
     pass
 
 

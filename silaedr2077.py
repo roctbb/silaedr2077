@@ -32,7 +32,8 @@ modules = {
     "balcony": balcony,
     "street": street,
     "basement": basement,
-    "swamp": swamp
+    "swamp": swamp, 
+    "forest" : forest
 }
 
 def add_user(message):
@@ -56,7 +57,6 @@ def add_user(message):
         "fun": random.randint(80, 100),
         "inventory": ["laptop", "phone", "bottle", "badge"],
         "location": "room",
-        "action" :"stay"
     }
 
 
@@ -73,8 +73,7 @@ def process_message(message):
     if message.text.startswith("/") and message.text.strip('/') in locations:
         module = modules[user["location"]]
         all_users = list(filter(lambda x: x["location"] == user["location"], users.values()))
-        old_location = locations[user["location"]]
-        module.leave(bot, user, all_users, old_location)
+        module.leave(bot, user, all_users)
 
 
         location_name = message.text.strip('/')
@@ -82,14 +81,12 @@ def process_message(message):
 
         module = modules[user["location"]]
         all_users = list(filter(lambda x: x["location"] == user["location"], users.values()))
-        location = locations[user["location"]]
-        module.enter(bot, user, all_users, location, old_location=old_location)
+        module.enter(bot, user, all_users)
     else:
         module = modules[user["location"]]
         all_users = list(filter(lambda x: x["location"] == user["location"], users.values()))
-        location = locations[user["location"]]
 
-        module.message(bot, message, user, all_users, location)
+        module.message(bot, message, user, all_users)
 
 
 bot.polling(none_stop=True)
