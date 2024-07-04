@@ -1,44 +1,11 @@
 import telebot
 from config import TOKEN
 import random
-from locations import room, street
+from locations import room, street, balcony, basement, forest, swamp
+from storage import *
+from helpers import *
 
 bot = telebot.TeleBot(TOKEN)
-
-users = {}
-locations = {
-    "room": {
-
-    },
-    "street": {
-
-    }
-}
-
-modules = {
-    "room": room,
-    "street": street
-}
-
-
-def add_user(message):
-    users[message.from_user.id] = {
-        "id": message.from_user.id,
-        "cookies": random.randint(10, 60),
-        "food": random.randint(50, 100),
-        "water": random.randint(50, 100),
-        "corners": 4,
-        "knowledge": 0,
-        "health": random.randint(20, 30),
-        "reputation": random.randint(30, 60),
-        "fun": random.randint(80, 100),
-        "inventory": ["laptop", "phone", "bottle", "badge"],
-        "location": "room"
-    }
-
-
-def is_registered(message):
-    return message.from_user.id in users
 
 
 @bot.message_handler(content_types=['text'])
@@ -47,7 +14,9 @@ def process_message(message):
         add_user(message)
 
     user = users[message.from_user.id]
-    if message.text == "/stats":
+    if message.text == "/locations":
+        bot.send_message(user["id"], ', '.join(locations.keys()))
+    elif message.text == "/stats":
         bot.send_message(user['id'], "Здоровье - " + str(user['health']))
         bot.send_message(user['id'], "Деньги - " + str(user['cookies']))
         bot.send_message(user['id'], "Еда - " + str(user['food']))
@@ -64,18 +33,15 @@ def process_message(message):
         location_name = message.text.strip('/')
         user["location"] = location_name
 
-        module = modules[user["location"]]
-        all_users = list(
-            filter(lambda x: x["location"] == user["location"], users.values()))
-        location = locations[user["location"]]
-        module.enter(bot, user, all_users, location)
+        module = get_module(user)
+        all_users = get_neighbours(user)
+        module.enter(bot, user, all_users, locations[user['location']])
     else:
-        module = modules[user["location"]]
-        all_users = list(
-            filter(lambda x: x["location"] == user["location"], users.values()))
-        location = locations[user["location"]]
+        module = get_module(user)
+        all_users = get_neighbours(user)
 
-        module.message(bot, message, user, all_users, location)
+        module.message(bot, message, user, all_users,
+                       locations[user['location']])
 
 
 bot.polling(none_stop=True)

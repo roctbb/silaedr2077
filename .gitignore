@@ -1,3 +1,7 @@
 config.py
 .idea
 eugen_tests.py
+tests.py
+__pycache__
+test
+locations/__pycache__
