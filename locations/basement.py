@@ -1,4 +1,4 @@
-def enter(bot, user, all_users, location):
+def enter(bot, user, all_users, location, previous_loctaion=None):
     bot.send_message(user["id"], "Вы зашли в подвал")
 
 def leave(bot, user, all_users, location):
