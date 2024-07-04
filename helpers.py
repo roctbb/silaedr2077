@@ -8,6 +8,7 @@ def get_neighbours(user):
 
 
 def get_module(user):
+    from modules import modules
     return modules[user["location"]]
 
 
