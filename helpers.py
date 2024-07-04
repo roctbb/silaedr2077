@@ -1,8 +1,10 @@
 from storage import *
 import random
 
+
 def get_neighbours(user):
     return list(filter(lambda x: x["location"] == user["location"], users.values()))
+
 
 def get_module(user):
     return modules[user["location"]]
@@ -24,6 +26,7 @@ def add_user(message):
         "cookies": random.randint(10, 60),
         "food": random.randint(50, 100),
         "water": random.randint(50, 100),
+        "health": random.randint(20, 30),
         "corners": 4,
         "knowledge": 0,
         "reputation": random.randint(30, 60),
