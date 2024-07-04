@@ -15,6 +15,16 @@ locations = {
 
     },
     "basement": {
+        "usersData" : {}, 
+        "locationImages" : {
+            0 : open("assets/basement.png"), 
+            1 : open("assets/ping-pong.png"), 
+            2 : open("assets/ping-pong.png"), 
+            3 : open("assets/ping-pong.png"), 
+            4 : open("assets/ping-pong.png"), 
+            5 : open("assets/ping-pong.png"), 
+            6 : open("assets/shop.png")
+        }
 
     },
     "forest": {
