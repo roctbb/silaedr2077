@@ -7,9 +7,9 @@ basemarkup = create_keyboard([["Магазин", "Пинг-понг"]])
 
 exitmarkup = create_keyboard([["Выйти"]])
 
-exitmarkup = create_keyboard([["Да", "Нет"]])
+choicemarkup = create_keyboard([["Да", "Нет"]])
 
-exitmarkup = create_keyboard([["Слева", "Спереди", "Справа"]])
+tennisgamemarkup = create_keyboard([["Слева", "Спереди", "Справа"]])
 
 def enter(bot, user, all_users, location):
     if user["id"] not in location["usersData"]:
