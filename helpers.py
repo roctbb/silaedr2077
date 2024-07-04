@@ -35,6 +35,12 @@ def add_user(message):
         "location": "room"
     }
 
+def has_path(old_name, new_name):
+    if not paths.get(old_name):
+        return True
+
+    return new_name in paths.get(old_name)
+
 
 def is_registered(message):
     return message.from_user.id in users
