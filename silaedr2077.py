@@ -7,13 +7,13 @@ from helpers import *
 
 bot = telebot.TeleBot(TOKEN)
 
-
 @bot.message_handler(content_types=['text'])
 def process_message(message):
     if not is_registered(message):
         add_user(message)
 
     user = users[message.from_user.id]
+
     if message.text == "/locations":
         bot.send_message(user["id"], ', '.join(locations.keys()))
     elif message.text == "/stats":
@@ -30,18 +30,26 @@ def process_message(message):
         bot.send_message(user['id'], "знания - " + str(user['knowledge']))
 
     elif message.text.startswith("/") and message.text.strip('/') in locations:
+        old_location_name = user["location"]
         location_name = message.text.strip('/')
-        user["location"] = location_name
 
-        module = get_module(user)
-        all_users = get_neighbours(user)
-        module.enter(bot, user, all_users, locations[user['location']])
+        if has_path(old_location_name, location_name):
+            module = get_module(user)
+            all_users = get_neighbours(user)
+
+            module.leave(bot, user, all_users, locations[user['location']])
+
+
+            user["location"] = location_name
+
+            module = get_module(user)
+            all_users = get_neighbours(user)
+            module.enter(bot, user, all_users, locations[user['location']])
     else:
         module = get_module(user)
         all_users = get_neighbours(user)
 
-        module.message(bot, message, user, all_users,
-                       locations[user['location']])
+        module.message(bot, message, user, all_users, locations[user['location']])
 
 
 bot.polling(none_stop=True)
