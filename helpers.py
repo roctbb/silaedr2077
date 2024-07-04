@@ -51,6 +51,20 @@ def is_registered(message):
 def get_all_users():
     return users.values()
 
+def move_player(bot, user, location):
+    if location == user["location"]:
+        bot.send_message(user["id"], "Вы уже на этой локации")
+    else:
+        if location in locations.keys():
+            if has_path(user["location"], location):
+                module = get_module(user)
+                all_users = get_neighbours(user)
+                module.leave(bot, user, all_users, locations[user['location']])
+                
+                user["location"] = location
+                module = get_module(user)
+                all_users = get_neighbours(user)
+                module.enter(bot, user, all_users, locations[user['location']])
 
 def create_keyboard(buttons):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)

@@ -23,21 +23,7 @@ def process_message(message):
         bot.send_message(user['id'], text)
 
     elif message.text.startswith("/") and message.text.strip('/') in locations:
-        old_location_name = user["location"]
-        location_name = message.text.strip('/')
-
-        if has_path(old_location_name, location_name):
-            module = get_module(user)
-            all_users = get_neighbours(user)
-
-            module.leave(bot, user, all_users, locations[user['location']])
-
-
-            user["location"] = location_name
-
-            module = get_module(user)
-            all_users = get_neighbours(user)
-            module.enter(bot, user, all_users, locations[user['location']])
+        move_player(bot, user, message.text.strip('/'))
     else:
         module = get_module(user)
         all_users = get_neighbours(user)
