@@ -1,6 +1,6 @@
 from locations import balcony, basement, forest, room, sport_ground, street, swamp
 
-modules = {
+available_modules = {
     "room": room,
     "balcony": balcony,
     "street": street,
