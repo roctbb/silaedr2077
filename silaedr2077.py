@@ -14,7 +14,9 @@ def process_message(message):
 
     user = users[message.from_user.id]
 
-    if message.text.startswith("/") and message.text.strip('/') in locations:
+    if message.text == "/locations":
+        bot.send_message(user["id"], ', '.join(locations.keys()))
+    elif message.text.startswith("/") and message.text.strip('/') in locations:
         module = get_module(user)
         all_users = get_neighbours(user)
 
