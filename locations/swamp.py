@@ -42,12 +42,18 @@ def message(bot, message, user, all_users, location):
                 bot.send_message(user["id"], "Вам не удалось ничего поймать")
     elif message.text == "/sell":
         if user["action"] != "drowning":
+            counter_of_swamp_sell=-1
             for i in user["inventory"]:
+                counter_of_swamp_sell+=1
                 for j in catches:
                     if i==j["name"]:
                         user["fun"]+=j["fun"]
                         user["cookies"]+=j["cost"]
                         user["reputation"]+=j["rep"]
+                        del user["inventory"][counter_of_swamp_sell]
+                        counter_of_swamp_sell-=1 
+
+                        
             bot.send_message(user["id"], "Вы обменяли найденных обитателей болота Ирине Николаевне на печеньки и репутацию, и получили удовольствие")
             if user["fun"]>100:
                 user["fun"]=100
