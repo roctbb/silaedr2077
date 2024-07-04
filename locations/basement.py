@@ -4,7 +4,6 @@ import time
 import helpers
 
 from telebot import types
-from storage import images
 
 basemarkup = helpers.create_keyboard([["Магазин", "Пинг-понг"]])
 
@@ -126,7 +125,7 @@ def message(bot, message, user, all_users, location=None):
                         location["usersData"][user["id"]]["stage"] = 5
                         location["usersData"][user["id"]]["turn"] *= -1
                     else:
-                        checkShielder(bot, message, user, all_users)
+                        checkShielder(bot, message, user, all_users, location)
                         location["usersData"][user["id"]]["turn"] *= -1
                 else:
                     bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Выбери еще одно место для защиты")
@@ -143,7 +142,7 @@ def message(bot, message, user, all_users, location=None):
                         location["usersData"][user["id"]]["stage"] = 5
                         location["usersData"][user["id"]]["turn"] *= -1
                 else:
-                    checkAttacker(bot, message, user, all_users)
+                    checkAttacker(bot, message, user, all_users, location)
                     location["usersData"][user["id"]]["turn"] *= -1
 
 
