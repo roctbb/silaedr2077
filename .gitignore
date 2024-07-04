@@ -1,4 +1,8 @@
 config.py
 .idea
 __pycache__
+<<<<<<< HEAD
 test.py
+=======
+locations/__pycache__
+>>>>>>> refs/remotes/origin/main
