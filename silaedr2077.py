@@ -17,17 +17,10 @@ def process_message(message):
     if message.text == "/locations":
         bot.send_message(user["id"], ', '.join(locations.keys()))
     elif message.text == "/stats":
-        bot.send_message(user['id'], "Здоровье - " + str(user['health']))
-        bot.send_message(user['id'], "Деньги - " + str(user['cookies']))
-        bot.send_message(user['id'], "Еда - " + str(user['food']))
-        bot.send_message(user['id'], "Вода - " + str(user['water']))
-        bot.send_message(user['id'], "Уголки - " + str(user['corners']))
-        bot.send_message(user['id'], "Веселье - " + str(user['fun']))
-        bot.send_message(user['id'], "Локация - " + str(user['location']))
-        bot.send_message(user['id'], "Репутация - " + str(user['reputation']))
-        bot.send_message(user['id'], "инвентарь - " +
-                         ', '.join(user['inventory']))
-        bot.send_message(user['id'], "знания - " + str(user['knowledge']))
+        text = ""
+        text += "Здоровье - " + str(user['health']) + "\n" "Деньги - " + str(user['cookies']) + "\n" + "Еда - " + str(user['food']) + "\n" + "Вода - " + str(user['water']) + "\n" + "Уголки - " + str(user['corners']) + "\n" + "Веселье - " + str(
+            user['fun']) + "\n" + "Локация - " + str(user['location']) + "\n" + "Репутация - " + str(user['reputation']) + "\n" + "инвентарь - " + ', '.join(user['inventory']) + "\n" + "знания - " + str(user['knowledge'])
+        bot.send_message(user['id'], text)
 
     elif message.text.startswith("/") and message.text.strip('/') in locations:
         old_location_name = user["location"]

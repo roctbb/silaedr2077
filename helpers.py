@@ -1,8 +1,11 @@
 from storage import *
 import random
+from telebot import types
+
 
 def get_neighbours(user):
     return list(filter(lambda x: x["location"] == user["location"], users.values()))
+
 
 def get_module(user):
     return modules[user["location"]]
@@ -24,6 +27,7 @@ def add_user(message):
         "cookies": random.randint(10, 60),
         "food": random.randint(50, 100),
         "water": random.randint(50, 100),
+        "health": random.randint(20, 30),
         "corners": 4,
         "knowledge": 0,
         "reputation": random.randint(30, 60),
@@ -32,6 +36,7 @@ def add_user(message):
         "location": "room",
         "action": "stay"
     }
+
 
 def has_path(old_name, new_name):
     if not paths.get(old_name):
@@ -42,3 +47,12 @@ def has_path(old_name, new_name):
 
 def is_registered(message):
     return message.from_user.id in users
+
+
+def create_keyboard(buttons):
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+
+    for button in buttons + DEFAULT_BUTTONS:
+        keyboard.add(buttons)
+
+    return keyboard

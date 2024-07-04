@@ -31,7 +31,7 @@ locationImages = {
     3 : open("assets/ping-pong.png"), 
     4 : open("assets/ping-pong.png"), 
     5 : open("assets/ping-pong.png"), 
-    6 : open("assets/shop.png"), 
+    6 : open("assets/shop.png")
 }
 
 def enter(bot, user, all_users, location=None):
