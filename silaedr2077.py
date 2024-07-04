@@ -15,7 +15,7 @@ def process_message(message):
     user = users[message.from_user.id]
 
     if message.text == "/locations":
-        bot.send_message(user["id"], ', '.join(locations.keys()))
+        bot.send_message(user["id"], "/" + '\n/'.join(locations.keys()))
     elif message.text == "/stats":
         text = ""
         text += "Здоровье - " + str(user['health']) + "\n" "Деньги - " + str(user['cookies']) + "\n" + "Еда - " + str(user['food']) + "\n" + "Вода - " + str(user['water']) + "\n" + "Уголки - " + str(user['corners']) + "\n" + "Веселье - " + str(
