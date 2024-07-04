@@ -1,11 +1,13 @@
-from storage import rooms, basement
+from storage import rooms, locations
+import helpers
+from modules import basement
 from telebot import types
 from datetime import datetime
 import random
 
 floorsmarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 floorsmarkup.add(
-    types.KeyboardButton("1 Этаж"),
+    types.KeyboardButton("Подвал"),
     types.KeyboardButton("2 Этаж"),
     types.KeyboardButton("3 Этаж"),
     types.KeyboardButton("4 Этаж")
@@ -40,10 +42,10 @@ def message(bot, message, user, all_users, location=None):
     if usersData.get(user["id"]):
         if not usersData[user["id"]]["floor"]:
             match message.text:
-                case "1 Этаж":
+                case "Подвал":
                     leave(bot, user, all_users, location)
                     user['location'] = "basement"
-                    basement.enter(bot, user, all_users, location)
+                    basement.enter(bot, user, all_users, locations["basement"])
                 case "2 Этаж":
                     usersData[user["id"]]["floor"] = 2
                     bot.send_message(user["id"], "Выберете комнату в которую хотите пойти", reply_markup = floormarkup2)
