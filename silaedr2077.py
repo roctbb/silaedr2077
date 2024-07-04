@@ -51,7 +51,6 @@ def add_user(message):
 def is_registered(message):
     return message.from_user.id in users
 
-
 @bot.message_handler(content_types=['text'])
 def process_message(message):
     if not is_registered(message):
