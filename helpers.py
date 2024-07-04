@@ -17,6 +17,7 @@ def add_user(message):
     if message.from_user.last_name != None:
         name += " "
         name += message.from_user.last_name
+
     users[message.from_user.id] = {
         "id": message.from_user.id,
         "name": name,

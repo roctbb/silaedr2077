@@ -1,4 +1,7 @@
+from locations import balcony, basement, forest, room, sport_ground, street, swamp
+
 users = {}
+
 locations = {
     "room": {
 
@@ -26,5 +29,6 @@ modules = {
     "street": street,
     "basement": basement,
     "swamp": swamp,
-    "forest" : forest
+    "forest" : forest,
+    "sport_ground": sport_ground
 }
