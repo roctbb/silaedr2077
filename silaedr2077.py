@@ -20,7 +20,7 @@ def process_message(message):
         module = get_module(user)
         all_users = get_neighbours(user)
 
-        module.leave(bot, user, all_users)
+        module.leave(bot, user, all_users, locations[user['location']])
 
 
         location_name = message.text.strip('/')
@@ -28,12 +28,12 @@ def process_message(message):
 
         module = get_module(user)
         all_users = get_neighbours(user)
-        module.enter(bot, user, all_users)
+        module.enter(bot, user, all_users, locations[user['location']])
     else:
         module = get_module(user)
         all_users = get_neighbours(user)
 
-        module.message(bot, message, user, all_users)
+        module.message(bot, message, user, all_users, locations[user['location']])
 
 
 bot.polling(none_stop=True)
