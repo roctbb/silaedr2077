@@ -44,3 +44,6 @@ def has_path(old_name, new_name):
 
 def is_registered(message):
     return message.from_user.id in users
+
+def get_all_users():
+    return users.values()
