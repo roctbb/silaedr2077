@@ -1,7 +1,7 @@
 import telebot
 from config import TOKEN
 import random
-from locations import room, street, balcony, basement, forest, swamp
+from locations import room, street, balcony, basement, forest, swamp, sport_ground
 from storage import *
 from helpers import *
 

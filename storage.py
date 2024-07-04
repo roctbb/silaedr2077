@@ -20,6 +20,9 @@ locations = {
     },
     "swamp":{
 
+    }, 
+    "sport_ground": {
+        "players": []
     }
 }
 
