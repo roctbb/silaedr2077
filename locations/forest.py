@@ -23,9 +23,6 @@ def message(bot, message, user, all_users, location=None):
         stop(bot, user)
     elif message.text == "/down":
         down(bot, user)
-    elif message.text == "/SecretC0deFor10000Cookie123zxc":
-        user["cookies"]=10000
-        bot.send_message(user["id"], "Вы нашли закладу печенья от 11 классников")
     else:
         bot.send_message(user["id"], "Лес")
 
