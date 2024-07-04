@@ -8,8 +8,8 @@ def get_neighbours(user):
 
 
 def get_module(user):
-    from modules import modules
-    return modules[user["location"]]
+    from modules import available_modules
+    return available_modules[user["location"]]
 
 
 def add_user(message):
