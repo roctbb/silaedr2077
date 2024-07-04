@@ -52,6 +52,10 @@ def create_keyboard(buttons):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
 
     for button in buttons + DEFAULT_BUTTONS:
+        if type(button) is list:
+            keyboard.add(*map(lambda x: types.KeyboardButton(x), button))
+        else:
+            keyboard.add(types.KeyboardButton(button))
         keyboard.add(buttons)
 
     return keyboard
