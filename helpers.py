@@ -57,6 +57,5 @@ def create_keyboard(buttons):
             keyboard.add(*map(lambda x: types.KeyboardButton(x), button))
         else:
             keyboard.add(types.KeyboardButton(button))
-        keyboard.add(buttons)
 
     return keyboard

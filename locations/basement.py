@@ -1,27 +1,15 @@
 from telebot import types
 import random
 import time
+from helpers import create_keyboard
 
-basemarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-item1=types.KeyboardButton("Покер")
-item2=types.KeyboardButton("Пинг-понг")
-basemarkup.add(item1, item2)
+basemarkup = create_keyboard([["Магазин", "Пинг-понг"]])
 
+exitmarkup = create_keyboard([["Выйти"]])
 
-exitmarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-item1=types.KeyboardButton("Выйти")
-exitmarkup.add(item1)
+exitmarkup = create_keyboard([["Да", "Нет"]])
 
-choicemarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-item1=types.KeyboardButton("Да")
-item2=types.KeyboardButton("Нет")
-choicemarkup.add(item1, item2)
-
-tennisgamemarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-item1=types.KeyboardButton("Слева")
-item2=types.KeyboardButton("Спереди")
-item3=types.KeyboardButton("Справа")
-tennisgamemarkup.add(item1, item2, item3)
+exitmarkup = create_keyboard([["Слева", "Спереди", "Справа"]])
 
 def enter(bot, user, all_users, location):
     if user["id"] not in location["usersData"]:
