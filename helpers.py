@@ -29,7 +29,8 @@ def add_user(message):
         "reputation": random.randint(30, 60),
         "fun": random.randint(80, 100),
         "inventory": ["laptop", "phone", "bottle", "badge"],
-        "location": "room"
+        "location": "room",
+        "action": "stay"
     }
 
 def has_path(old_name, new_name):

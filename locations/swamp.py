@@ -1,3 +1,4 @@
+import random
 def enter(bot, user, all_users, location):
     bot.send_message(user["id"], "Вы вошли на болото")
 
@@ -34,22 +35,34 @@ def message(bot, message, user, all_users, location):
             bot.send_message(user["id"], "Вы начинаете ловить кого то в болоте.")
             catch=random.choice(catches)
             if catch["propobilyty"] >= random.randint(0,100):
-                st="Вы поймали нечто! И это - "+catch["runame"]
+                st="Вы поймали нечто! И это - "+catch["runame"]+". Ecли вы хотите вылезти из болота, пропишите /stop_drowning"
                 bot.send_message(user["id"], st)
                 user["inventory"].append(catch["name"])
             else:
-                bot.send_message(user["id"], )
+                bot.send_message(user["id"], "Вам не удалось ничего поймать")
     elif message.text == "/sell":
         if user["action"] != "drowning":
             for i in user["inventory"]:
                 for j in catches:
-                    if i==j[""]:
-                        pass
-
-
-
-
-    bot.send_message(user["id"], "Вы на болоте")
+                    if i==j["name"]:
+                        user["fun"]+=j["fun"]
+                        user["cookies"]+=j["cost"]
+                        user["reputation"]+=j["rep"]
+            bot.send_message(user["id"], "Вы обменяли найденных обитателей болота Ирине Николаевне на печеньки и репутацию, и получили удовольствие")
+            if user["fun"]>100:
+                user["fun"]=100
+            if user["reputation"]>100:
+                user["reputation"]=100
+        else:
+            bot.send_message(user["id"], "Вы все еще тоните!")
+    elif message.text == "/stop_drowning":
+        if user["action"] == "drowning":
+            user["action"] = "stay"
+            bot.send_message(user["id"], "Вы перестали тонуть в болоте")
+        else:
+            bot.send_message(user["id"], "Вы еще не тонете")
+    else:
+        bot.send_message(user["id"], "Вы на болоте")
 
 def events(bot, all_users, location):
     pass
