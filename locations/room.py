@@ -1,12 +1,12 @@
 import random
 
-def enter(bot, user, all_users):
+def enter(bot, user, all_users, location, previous_location=None):
     bot.send_message(user["id"], "Вы зашли в комнату")
 
-def leave(bot, user, all_users):
+def leave(bot, user, all_users, location=None):
     pass
 
-def message(bot, message, user, all_users):
+def message(bot, message, user, all_users, location=None):
     if message.text == "search":
         you_found = {
             "печенье": random.randint(10, 20)
@@ -15,5 +15,5 @@ def message(bot, message, user, all_users):
         return
     bot.send_message(user["id"], "Комната")
 
-def events(bot, all_users):
+def events(bot, all_users, location=None):
     pass
