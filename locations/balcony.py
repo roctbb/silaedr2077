@@ -1,10 +1,10 @@
-def enter(bot, user, all_users):
+def enter(bot, user, all_users, location=None):
         bot.send_message(user["id"], "Вы вышли на балкон")
     
-def leave(bot, user, all_users):
+def leave(bot, user, all_users, location=None):
     pass
 
-def message(bot, message, user, all_users):
+def message(bot, message, user, all_users, location=None):
     bot.send_message(user["id"], "Балкон")
 
 def events(bot, all_users):

@@ -34,7 +34,7 @@ locationImages = {
     6 : open("assets/shop.png"), 
 }
 
-def enter(bot, user, all_users):
+def enter(bot, user, all_users, location=None):
     if user["id"] not in usersData:
         bot.send_message(user["id"], f"Вижу ты тут впервые, ну чтож, думаю сам разберешся)\nСейчас здесь тусуется {len(all_users)} игроков", reply_markup=basemarkup)
     else:
@@ -52,7 +52,7 @@ def enter(bot, user, all_users):
     
     
 
-def leave(bot, user, all_users):
+def leave(bot, user, all_users, location=None):
     bot.send_message(user["id"], "Ты вышел из подвала :(")
 
 def checkShielder(bot, message, user, all_users):
@@ -82,7 +82,7 @@ def checkShielder(bot, message, user, all_users):
             bot.send_message(usersData[user["id"]]["playtennisConnection"]["id"], f"Ты забил\nСчет {score[1]}:{score[0]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
             usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 
-def checkAttacker(bot, message, user, all_users):
+def checkAttacker(bot, message, user, all_users, location=None):
     if usersData[user["id"]]["attackChoice"] in usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["shieldChoice"]:
         score = [usersData[user["id"]]["score"][0], usersData[user["id"]]["score"][1]]
         bot.send_message(user["id"], f"Противник отбил твой удар\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешься", reply_markup=tennisgamemarkup)
@@ -109,7 +109,7 @@ def checkAttacker(bot, message, user, all_users):
             bot.send_message(usersData[user["id"]]["playtennisConnection"]["id"], f"Тебе забили\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
             usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 
-def message(bot, message, user, all_users):
+def message(bot, message, user, all_users, location=None):
     # pingpongMainGame
     # waiting
     if not usersData[user["id"]]["wait"]:
@@ -254,5 +254,5 @@ def message(bot, message, user, all_users):
     else:
         bot.send_message(user["id"], "Не тыкай так часто :(")
 
-def events(bot, all_users):
+def events(bot, all_users, location=None):
     pass
