@@ -37,8 +37,8 @@ def leave(bot, user, all_users, location=None):
 def checkShielder(bot, message, user, all_users, location):
     if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["attackChoice"] in location["usersData"][user["id"]]["shieldChoice"]:
         score = [location["usersData"][user["id"]]["score"][0], location["usersData"][user["id"]]["score"][1]]
-        bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Ты успешно отбил удар\nСчет {score[0]}:{score[1]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
-        bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Противник отбил твой удар\nсчет {score[1]}:{score[0]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
+        bot.send_message(user["id"], f"Ты успешно отбил удар\nСчет {score[0]}:{score[1]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
+        bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Противник отбил твой удар\nсчет {score[1]}:{score[0]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
         location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
     else:
         if location["usersData"][user["id"]]["score"][1] + 1 == 5:
@@ -57,15 +57,15 @@ def checkShielder(bot, message, user, all_users, location):
             location["usersData"][user["id"]]["score"][1] += 1
             score = [location["usersData"][user["id"]]["score"][0], location["usersData"][user["id"]]["score"][1]]
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["score"][0] += 1
-            bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Тебе забили\nСчет {score[0]}:{score[1]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
-            bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Ты забил\nСчет {score[1]}:{score[0]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
+            bot.send_message(user["id"], f"Тебе забили\nСчет {score[0]}:{score[1]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
+            bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Ты забил\nСчет {score[1]}:{score[0]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 
 def checkAttacker(bot, message, user, all_users, location=None):
     if location["usersData"][user["id"]]["attackChoice"] in location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["shieldChoice"]:
         score = [location["usersData"][user["id"]]["score"][0], location["usersData"][user["id"]]["score"][1]]
-        bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Противник отбил твой удар\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешься", reply_markup=tennisgamemarkup)
-        bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Ты успешно отбил удар\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
+        bot.send_message(user["id"], f"Противник отбил твой удар\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешься", reply_markup=tennisgamemarkup)
+        bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Ты успешно отбил удар\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
         location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
     else:
         if location["usersData"][user["id"]]["score"][0] + 1 == 5:
@@ -84,8 +84,8 @@ def checkAttacker(bot, message, user, all_users, location=None):
             location["usersData"][user["id"]]["score"][0] += 1
             score = [location["usersData"][user["id"]]["score"][0], location["usersData"][user["id"]]["score"][1]]
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["score"][1] += 1
-            bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Ты попал!\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
-            bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Тебе забили\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
+            bot.send_message(user["id"], f"Ты попал!\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
+            bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Тебе забили\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 
 def message(bot, message, user, all_users, location=None):
@@ -128,7 +128,7 @@ def message(bot, message, user, all_users, location=None):
                         checkShielder(bot, message, user, all_users, location)
                         location["usersData"][user["id"]]["turn"] *= -1
                 else:
-                    bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Выбери еще одно место для защиты")
+                    bot.send_message(user["id"], "Выбери еще одно место для защиты")
             else:
                 if message.text == "Слева":
                     location["usersData"][user["id"]]["attackChoice"] = 0
@@ -150,17 +150,17 @@ def message(bot, message, user, all_users, location=None):
         elif location["usersData"][user["id"]]["stage"] == 3:
             if message.text == "Выйти":
                 location["usersData"][user["id"]]["stage"] = 0
-                bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Вы вышли в главное меню", reply_markup=basemarkup)
+                bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Вы вышли в главное меню", reply_markup=basemarkup)
                 location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 0
-                bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption=f"Ваш оппонент отозвал предложение", reply_markup=basemarkup)
+                bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/base.jpg", "rb"), caption=f"Ваш оппонент отозвал предложение", reply_markup=basemarkup)
                 location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["playtennisConnection"] = None
                 location["usersData"][user["id"]]["playtennisConnection"] = None
             else:
-                bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Вы можете только выйти(нажмите кнопку в меню)")
+                bot.send_message(user["id"], "Вы можете только выйти(нажмите кнопку в меню)")
         # choice if someone wants to play with u -----------------------------
         elif location["usersData"][user["id"]]["stage"] == 2:
             if message.text == "Нет":
-                bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Окей, отмена", reply_markup=basemarkup)
+                bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Отмена", reply_markup=basemarkup)
                 location["usersData"][user["id"]]["stage"] = 0
                 n = user["name"]
                 bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/base.jpg", "rb"), caption=f"{n} отказался :(", reply_markup=basemarkup)
@@ -177,17 +177,17 @@ def message(bot, message, user, all_users, location=None):
 
                 location["usersData"][user["id"]]["turn"] = random.choice([-1, 1])
                 if location["usersData"][user["id"]]["turn"] == 1:
-                    bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты атакуешь, выбери куда будешь бить")
-                    bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты защищаешься, выбери что будешь защищать")
+                    bot.send_message(user["id"], "Ты атакуешь, выбери куда будешь бить")
+                    bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], "Ты защищаешься, выбери что будешь защищать")
                 else:
-                    bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты защищаешься, выбери что будешь защищать")
-                    bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты атакуешь, выбери куда будешь бить")
+                    bot.send_message(user["id"], "Ты защищаешься, выбери что будешь защищать")
+                    bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], "Ты атакуешь, выбери куда будешь бить")
                 location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["turn"] = location["usersData"][user["id"]]["turn"]*-1
         # opponent choice -----------------------------
         elif location["usersData"][user["id"]]["stage"] == 1:
             if message.text == "Отмена":
                 location["usersData"][user["id"]]["stage"] = 0
-                bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Окей, отмена", reply_markup=basemarkup)
+                bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Отмена", reply_markup=basemarkup)
             else:
                 data = []
                 for i in all_users:
@@ -210,12 +210,12 @@ def message(bot, message, user, all_users, location=None):
                         if i != user:
                             markupPlayers.add(i["name"])
                     markupPlayers.add("Отмена")
-                    bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Игрок не найден, возможно он уже вышел из подвала или играет с кем-то еще", reply_markup=markupPlayers)
+                    bot.send_message(user["id"], "Игрок не найден, возможно он уже вышел из подвала или играет с кем-то еще", reply_markup=markupPlayers)
 
         # base menu -----------------------------
         elif location["usersData"][user["id"]]["stage"] == 0:
             if message.text == "Магазин":
-                bot.send_photo(user["id"], open("assets/basement/shop.jpg", "rb"), caption="Выбран покер")
+                bot.send_photo(user["id"], open("assets/basement/shop.jpg", "rb"), caption="Вы зашли в магазин")
             if message.text == "Пинг-понг":
                 if len(all_users) > 1:
                     location["usersData"][user["id"]]["playtennis"] = True
@@ -227,12 +227,12 @@ def message(bot, message, user, all_users, location=None):
                     location["usersData"][user["id"]]["stage"] = 1
                     bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты можеш сыграть, выбери игрока", reply_markup=markupPlayers)
                 else:
-                    bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="В подвале никого нет, попробуй позже")
+                    bot.send_message(user["id"], "В подвале никого нет, попробуй позже")
         
         time.sleep(1)
         location["usersData"][user["id"]]["wait"] = False
     else:
-        bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Не тыкай так часто :(")
+        bot.send_message(user["id"], "Не тыкай так часто :(")
 
 def events(bot, all_users, location=None):
     pass
