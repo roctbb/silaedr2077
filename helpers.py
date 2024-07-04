@@ -1,5 +1,6 @@
 from storage import *
 import random
+from telebot import types
 
 
 def get_neighbours(user):
@@ -35,6 +36,7 @@ def add_user(message):
         "location": "room"
     }
 
+
 def has_path(old_name, new_name):
     if not paths.get(old_name):
         return True
@@ -44,3 +46,12 @@ def has_path(old_name, new_name):
 
 def is_registered(message):
     return message.from_user.id in users
+
+
+def create_keyboard(buttons):
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+
+    for button in buttons + DEFAULT_BUTTONS:
+        keyboard.add(buttons)
+
+    return keyboard
