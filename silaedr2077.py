@@ -1,7 +1,7 @@
 import telebot
 from config import TOKEN
 import random
-from locations import room, street
+from locations import room, street, swamp
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -12,12 +12,16 @@ locations = {
     },
     "street": {
 
+    },
+    "swamp": {
+
     }
 }
 
 modules = {
     "room": room,
-    "street": street
+    "street": street,
+    "swamp": swamp
 }
 
 def add_user(message):
