@@ -16,19 +16,35 @@ def process_message(message):
 
     if message.text == "/locations":
         bot.send_message(user["id"], ', '.join(locations.keys()))
+    elif message.text == "/stats":
+        bot.send_message(user['id'], "Здоровье - " + str(user['health']))
+        bot.send_message(user['id'], "Деньги - " + str(user['cookies']))
+        bot.send_message(user['id'], "Еда - " + str(user['food']))
+        bot.send_message(user['id'], "Вода - " + str(user['water']))
+        bot.send_message(user['id'], "Уголки - " + str(user['corners']))
+        bot.send_message(user['id'], "Веселье - " + str(user['fun']))
+        bot.send_message(user['id'], "Локация - " + str(user['location']))
+        bot.send_message(user['id'], "Репутация - " + str(user['reputation']))
+        bot.send_message(user['id'], "инвентарь - " +
+                         ', '.join(user['inventory']))
+        bot.send_message(user['id'], "знания - " + str(user['knowledge']))
+
     elif message.text.startswith("/") and message.text.strip('/') in locations:
-        module = get_module(user)
-        all_users = get_neighbours(user)
-
-        module.leave(bot, user, all_users, locations[user['location']])
-
-
+        old_location_name = user["location"]
         location_name = message.text.strip('/')
-        user["location"] = location_name
 
-        module = get_module(user)
-        all_users = get_neighbours(user)
-        module.enter(bot, user, all_users, locations[user['location']])
+        if has_path(old_location_name, location_name):
+            module = get_module(user)
+            all_users = get_neighbours(user)
+
+            module.leave(bot, user, all_users, locations[user['location']])
+
+
+            user["location"] = location_name
+
+            module = get_module(user)
+            all_users = get_neighbours(user)
+            module.enter(bot, user, all_users, locations[user['location']])
     else:
         module = get_module(user)
         all_users = get_neighbours(user)

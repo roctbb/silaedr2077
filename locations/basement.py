@@ -30,17 +30,17 @@ def enter(bot, user, all_users, location=None):
         bot.send_message(user["id"], f"Вижу ты тут впервые, ну чтож, думаю сам разберешся)\nСейчас здесь тусуется {len(all_users)} игроков", reply_markup=basemarkup)
     else:
         bot.send_message(user["id"], f"Снова привет братан)\nИгроков в подвале: {len(all_users)}", reply_markup=basemarkup)
-    
+
     usersData[user["id"]] = {
-        "playtennisConnection" : None, 
-        "stage" : 0, 
-        "shieldChoice" : [], 
-        "attackChoice" : 0, 
-        "turn" : -1, 
+        "playtennisConnection" : None,
+        "stage" : 0,
+        "shieldChoice" : [],
+        "attackChoice" : 0,
+        "turn" : -1,
         "score" : [0, 0]
     }
-    
-    
+
+
 
 def leave(bot, user, all_users, location=None):
     bot.send_message(user["id"], "Ты вышел из подвала :(")
@@ -155,7 +155,7 @@ def message(bot, message, user, all_users, location=None):
                     checkAttacker(bot, message, user, all_users)
                     usersData[user["id"]]["turn"] *= -1
 
-        
+
         # cansel if u are tennis host + waiting for opponent to confirm -----------------------------
         elif usersData[user["id"]]["stage"] == 3:
             if message.text == "Выйти":
@@ -182,9 +182,9 @@ def message(bot, message, user, all_users, location=None):
                 usersData[user["id"]]["stage"] = 4
                 bot.send_message(usersData[user["id"]]["playtennisConnection"]["id"], "Оппонент согласен, начинаем игру!", reply_markup=tennisgamemarkup)
                 usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
-                
+
                 # game starting
-                
+
                 usersData[user["id"]]["turn"] = random.choice([-1, 1])
                 if usersData[user["id"]]["turn"] == 1:
                     bot.send_message(user["id"], "Ты атакуешь, выбери куда будешь бить")
@@ -203,7 +203,7 @@ def message(bot, message, user, all_users, location=None):
                 for i in all_users:
                     if usersData[i["id"]]["stage"] in [0, 1] : data.append(i["name"])
                 if message.text in data and message.text != user["name"]:
-                    
+
                     for i in all_users:
                         if i["name"] == message.text:
                             usersData[user["id"]]["playtennisConnection"] = i
@@ -221,7 +221,7 @@ def message(bot, message, user, all_users, location=None):
                             markupPlayers.add(i["name"])
                     markupPlayers.add("Отмена")
                     bot.send_message(user["id"], "Игрок не найден, возможно он уже вышел из подвала или играет с кем-то еще", reply_markup=markupPlayers)
-                    
+
         # base menu -----------------------------
         elif usersData[user["id"]]["stage"] == 0:
             if message.text == "Покер":

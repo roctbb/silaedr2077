@@ -37,3 +37,10 @@ modules = {
     "forest" : forest,
     "sport_ground": sport_ground
 }
+
+paths = {
+    "room": [],
+    "street": [],
+    "balcony": ["room"],
+    "basement": []
+}
