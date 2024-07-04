@@ -4,7 +4,7 @@ import time
 
 basemarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 item1=types.KeyboardButton("Покер")
-item2=types.KeyboardButton("Наст. Теннис")
+item2=types.KeyboardButton("Пинг-понг")
 basemarkup.add(item1, item2)
 
 
@@ -24,6 +24,15 @@ item3=types.KeyboardButton("Справа")
 tennisgamemarkup.add(item1, item2, item3)
 
 usersData = {}
+locationImages = {
+    0 : open("assets/basement.png"), 
+    1 : open("assets/ping-pong.png"), 
+    2 : open("assets/ping-pong.png"), 
+    3 : open("assets/ping-pong.png"), 
+    4 : open("assets/ping-pong.png"), 
+    5 : open("assets/ping-pong.png"), 
+    6 : open("assets/shop.png"), 
+}
 
 def enter(bot, user, all_users):
     if user["id"] not in usersData:
@@ -37,7 +46,8 @@ def enter(bot, user, all_users):
         "shieldChoice" : [], 
         "attackChoice" : 0, 
         "turn" : -1, 
-        "score" : [0, 0]
+        "score" : [0, 0],
+        "wait" : False 
     }
     
     
@@ -102,7 +112,8 @@ def checkAttacker(bot, message, user, all_users):
 def message(bot, message, user, all_users):
     # pingpongMainGame
     # waiting
-    try:
+    if not usersData[user["id"]]["wait"]:
+        usersData[user["id"]]["wait"] = True
         if usersData[user["id"]]["stage"] == 5:
             if message.text == "Выйти":
                 usersData[user["id"]]["stage"] = 0
@@ -129,7 +140,6 @@ def message(bot, message, user, all_users):
                 elif message.text == "Справа":
                     usersData[user["id"]]["shieldChoice"].append(2)
                 if len(usersData[user["id"]]["shieldChoice"]) == 2:
-                    time.sleep(random.random()*3)
                     if usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["stage"] == 4:
                         bot.send_message(user["id"], "Ты сделал выбор, ожидай противника...", reply_markup=exitmarkup)
                         usersData[user["id"]]["stage"] = 5
@@ -146,7 +156,7 @@ def message(bot, message, user, all_users):
                     usersData[user["id"]]["attackChoice"] = 1
                 elif message.text == "Справа":
                     usersData[user["id"]]["attackChoice"] = 2
-                time.sleep(random.random()*3)
+                
                 if usersData[usersData[user["id"]]["playtennisConnection"]["id"]]["stage"] == 4:
                         bot.send_message(user["id"], "Ты сделал выбор, ожидай противника...", reply_markup=exitmarkup)
                         usersData[user["id"]]["stage"] = 5
@@ -238,8 +248,11 @@ def message(bot, message, user, all_users):
                     bot.send_message(user["id"], "Ты можеш сыграть, выбери игрока", reply_markup=markupPlayers)
                 else:
                     bot.send_message(user["id"], "В подвале никого нет, попробуй позже")
-    except:
-        print("error :)")
+        
+        time.sleep(1)
+        usersData[user["id"]]["wait"] = False
+    else:
+        bot.send_message(user["id"], "Не тыкай так часто :(")
 
 def events(bot, all_users):
     pass
