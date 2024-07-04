@@ -1,5 +1,7 @@
 from locations import balcony, basement, forest, room, sport_ground, street, swamp
 
+DEFAULT_BUTTONS = ["/locations", "/stats"]
+
 users = {}
 
 locations = {
