@@ -25,8 +25,17 @@ modules = {
 }
 
 def add_user(message):
+    name = ""
+    if message.from_user.first_name != None:
+        name += message.from_user.first_name
+    else:
+        name += "Anonim"
+    if message.from_user.last_name != None:
+        name += " "
+        name += message.from_user.last_name
     users[message.from_user.id] = {
         "id": message.from_user.id,
+        "name": name,
         "cookies": random.randint(10, 60),
         "food": random.randint(50, 100),
         "water": random.randint(50, 100),
