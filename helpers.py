@@ -38,36 +38,28 @@ def add_user(message):
         "action": "stay"
     }
 
-def has_path(old_name, new_name):
-    if not paths.get(old_name):
-        return True
-
-    return new_name in paths.get(old_name)
-
-
 def is_registered(message):
     return message.from_user.id in users
 
 def get_all_users():
     return users.values()
 
-def move_player(bot, user, location):
+def move_player(bot, user, location:str):
     if location == user["location"]:
         bot.send_message(user["id"], "Вы уже на этой локации")
     else:
         if location in locations.keys():
-            if has_path(user["location"], location):
-                module = get_module(user)
-                all_users = get_neighbours(user)
-                module.leave(bot, user, all_users, locations[user['location']])
-                
-                user["location"] = location
-                module = get_module(user)
-                all_users = get_neighbours(user)
-                module.enter(bot, user, all_users, locations[user['location']])
+            module = get_module(user)
+            all_users = get_neighbours(user)
+            module.leave(bot, user, all_users, locations[user['location']])
+            
+            user["location"] = location
+            module = get_module(user)
+            all_users = get_neighbours(user)
+            module.enter(bot, user, all_users, locations[user['location']])
 
-def create_keyboard(buttons):
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+def create_keyboard(buttons, rowsWidth=3):
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=rowsWidth)
 
     for button in buttons + DEFAULT_BUTTONS:
         if type(button) is list:

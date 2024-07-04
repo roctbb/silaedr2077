@@ -5,7 +5,7 @@ import helpers
 
 from telebot import types
 
-basemarkup = helpers.create_keyboard([["Магазин", "Пинг-понг"]])
+basemarkup = helpers.create_keyboard([["Магазин", "Пинг-понг", "Выйти"]])
 
 exitmarkup = helpers.create_keyboard([["Выйти"]])
 
@@ -216,7 +216,7 @@ def message(bot, message, user, all_users, location=None):
             elif location["usersData"][user["id"]]["stage"] == 0:
                 if message.text == "Магазин":
                     bot.send_photo(user["id"], open("assets/basement/shop.jpg", "rb"), caption="Вы зашли в магазин")
-                if message.text == "Пинг-понг":
+                elif message.text == "Пинг-понг":
                     if len(all_users) > 1:
                         location["usersData"][user["id"]]["playtennis"] = True
                         markupPlayers = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -228,6 +228,8 @@ def message(bot, message, user, all_users, location=None):
                         bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты можеш сыграть, выбери игрока", reply_markup=markupPlayers)
                     else:
                         bot.send_message(user["id"], "В подвале никого нет, попробуй позже")
+                elif message.text == "Выйти":
+                    helpers.move_player(bot, user, "choice")
             
             time.sleep(1)
             location["usersData"][user["id"]]["wait"] = False

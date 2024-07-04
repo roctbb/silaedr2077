@@ -1,11 +1,9 @@
 from helpers import *
 
-usersData = {}
-
-basemarkup = create_keyboard([["В разработке..."]])
+basemarkup = create_keyboard([["Поесть", "Попить", "Украсть печеньку"]])
 
 def enter(bot, user, all_users, location):
-    bot.send_message(user["id"], "Ты зашел в комнату [номер]", reply_markup=basemarkup)
+    bot.send_message(user["id"], "Ты зашел в столовку", reply_markup=basemarkup)
 
 def leave(bot, user, all_users, location):
     pass
