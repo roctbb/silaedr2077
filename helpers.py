@@ -6,7 +6,6 @@ from telebot import types
 def get_neighbours(user):
     return list(filter(lambda x: x["location"] == user["location"], users.values()))
 
-
 def get_module(user):
     from modules import available_modules
     return available_modules[user["location"]]

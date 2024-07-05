@@ -10,7 +10,10 @@ locations = {
 
     },
     "basement": {
-        "usersData": {}
+        "usersData": {},
+        "StoreOffers": {
+            #OffererId: [itemName, costValue(cookies)]
+        }
     },
     "forest": {
 
