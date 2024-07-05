@@ -55,15 +55,16 @@ def message(bot, message, user, all_users, location):
         elif message.text == "Украсть печеньку":
             rng = random.randint(1, 5)
             if random.randint(1, 10) == 1 or user["reputation"]<20:
+                user["corners"] -= 1
                 bot.send_message(user["id"], f"Вас спалили, забрали уголок :(\n-1 уголок🔼")
             else:
                 user["cookies"] += rng
                 if random.randint(1, 2) == 1:
                     bot.send_message(user["id"], f"Вы успешно украли печеньки\n+{rng} печенек🍪")
                 else:
-                    rng = random.randint(5, 15)
-                    bot.send_message(user["id"], f"Вы успешно украли печеньки\nКажется кто-то заметил, но не стал рассказывать другим\n+{rng} печенек🍪\n-{rng} репутации⬇️")
-                    user["reputation"] -= rng
+                    rng2 = random.randint(5, 15)
+                    bot.send_message(user["id"], f"Вы успешно украли печеньки\nКажется кто-то заметил, но не стал рассказывать другим\n+{rng} печенек🍪\n-{rng2} репутации⬇️")
+                    user["reputation"] -= rng2
         elif message.text == "Выйти":
             bot.send_message(user["id"], "Ты вышел из столовой")
             move_player(bot, user, "choice")
@@ -72,4 +73,11 @@ def message(bot, message, user, all_users, location):
 
 
 def events(bot, all_users, location):
-    pass
+    for i in range(len(users)):
+        users["i"]["water"] -= random.randint(0, 1)
+        users["i"]["food"] -= random.randint(0, 1)
+    if random.randint(0, 3) == 0:
+        if users["i"]["water"] < 10:
+            bot.send_message(users["i"]["id"], "Не забывайти пить воду, у вас меньше 10%")
+        if users["i"]["food"] < 10:
+            bot.send_message(users["i"]["id"], "Не забывайти есть, у вас меньше 10%")
