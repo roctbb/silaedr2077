@@ -94,4 +94,3 @@ def give_stats(user, bot):
 def save_data():
     with open('save.json', 'w', encoding='utf-8') as f:
         json.dump([users, locations], f, ensure_ascii=False, indent=4)
-        print("saved data")

@@ -6,6 +6,7 @@ bot = get_bot()
 
 @bot.message_handler(content_types=['text'])
 def process_message(message):
+    print(message.from_user.first_name + " >> " + message.text)
     if not is_registered(message):
         add_user(message)
 
