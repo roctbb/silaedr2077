@@ -31,7 +31,7 @@ def add_user(message):
         "health": random.randint(20, 30),
         "corners": 4,
         "knowledge": 0,
-        "reputation": random.randint(30, 60),
+        "reputation": random.randint(30, 80),
         "fun": random.randint(80, 100),
         "inventory": ["laptop", "phone", "bottle", "badge"],
         "location": "room",

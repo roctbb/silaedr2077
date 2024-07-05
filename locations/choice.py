@@ -3,7 +3,7 @@ from storage import *
 
 basemarkup = create_keyboard([["Подвал", "Улица"], ["3 этаж"], ["4 этаж"]])
 
-outsidemarkup = create_keyboard([["Болото", "Лес"]])
+outsidemarkup = create_keyboard([["Болото", "Лес", "Спорт площадка"]])
 
 floor3markup = create_keyboard([["Отмена", "Столовая"], list(rooms[3])], rowsWidth=7)
 floor4markup = create_keyboard([["Отмена"], list(rooms[4])], rowsWidth=7)
@@ -37,6 +37,8 @@ def message(bot, message, user, all_users, location):
             move_player(bot, user, "swamp")
         elif message.text == "Лес":
             move_player(bot, user, "forest")
+        elif message.text == "Спорт площадка":
+            move_player(bot, user, "sport_ground")
         else:
             bot.send_message(user["id"], "Пользуйся кнопками!")
     elif location["usersData"][user["id"]]["stage"] == 2:

@@ -22,7 +22,7 @@ locations = {
         "usersData": {}
     }, 
     "eatery":{
-
+        "usersData": {}
     }, 
     "sport_ground":{
 

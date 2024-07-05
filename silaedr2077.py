@@ -1,7 +1,5 @@
 import telebot
 from config import TOKEN
-import random
-from locations import balcony, basement, choice, forest, room, sport_ground, swamp, eatery
 from storage import *
 from helpers import *
 
@@ -18,8 +16,8 @@ def process_message(message):
         bot.send_message(user["id"], "/" + '\n/'.join(locations.keys()))
     elif message.text == "/stats":
         text = ""
-        text += "Здоровье - " + str(user['health']) + "\n" "Деньги - " + str(user['cookies']) + "\n" + "Еда - " + str(user['food']) + "\n" + "Вода - " + str(user['water']) + "\n" + "Уголки - " + str(user['corners']) + "\n" + "Веселье - " + str(
-            user['fun']) + "\n" + "Локация - " + str(user['location']) + "\n" + "Репутация - " + str(user['reputation']) + "\n" + "инвентарь - " + ', '.join(user['inventory']) + "\n" + "знания - " + str(user['knowledge'])
+        text += "Здоровье " + str(user['health']) + "\n" "Печеньки(валюта) " + str(user['cookies']) + "\n" + "Еда " + str(user['food']) + "\n" + "Вода " + str(user['water']) + "\n" + "Уголки " + str(user['corners']) + "\n" + "Веселье " + str(
+            user['fun']) + "\n" + "Локация " + str(user['location']) + "\n" + "Репутация " + str(user['reputation']) + "\n" + "инвентарь " + ', '.join(user['inventory']) + "\n" + "знания " + str(user['knowledge'])
         bot.send_message(user['id'], text)
 
     elif message.text.startswith("/") and message.text.strip('/') in locations:
