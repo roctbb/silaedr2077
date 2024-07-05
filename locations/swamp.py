@@ -51,18 +51,23 @@ def message(bot, message, user, all_users, location):
                 user["inventory"].append(catch["name"])
             else:
                 bot.send_message(user["id"], "Вам не удалось ничего поймать. Можете попробовать снова, или вылезти из болота 'вылезти'", reply_markup=but)
-    elif message.text == "/sell":
+    elif message.text == "продажа":
         if user["action"] != "drowning":
-            counter_of_swamp_sell = -1
-            for i in user["inventory"]:
-                counter_of_swamp_sell += 1
-                for j in catches:
-                    if i==j["name"]:
-                        user["fun"]+=j["fun"]
-                        user["cookies"]+=j["cost"]
-                        user["reputation"]+=j["rep"]
-                        del user["inventory"][counter_of_swamp_sell]
-                        counter_of_swamp_sell-=1 
+            
+            length_of_sell=0
+            while ("leech" in user["inventory"] or "snail" in user["inventory"] or "stonefly" in user["inventory"] or "frog" in user["inventory"]) and length_of_sell<1000:
+                counter_of_swamp_sell = -1
+                length_of_sell+=1
+                for i in user["inventory"]:
+                    counter_of_swamp_sell += 1
+                    for j in catches:
+                        if i==j["name"]:
+                            user["fun"]+=j["fun"]
+                            user["cookies"]+=j["cost"]
+                            user["reputation"]+=j["rep"]
+                            if counter_of_swamp_sell<len(user["inventory"]):
+                                del user["inventory"][counter_of_swamp_sell]
+                            counter_of_swamp_sell-=1 
 
                         
             bot.send_message(user["id"], "Вы обменяли найденных обитателей болота Ирине Николаевне на печеньки и репутацию, и получили удовольствие", reply_markup=but)
