@@ -3,7 +3,7 @@ from datetime import datetime
 import random
 from storage import *
 
-basemarkup = create_keyboard([["Поесть", "Попить", "Украсть печеньку"], ["Выйти"]])
+basemarkup = create_keyboard([["Поесть", "Попить", "Украсть печеньку", "Налить воды"], ["Выйти"]])
 
 def enter(bot, user, all_users, location):
     if user["id"] not in location["usersData"].keys():

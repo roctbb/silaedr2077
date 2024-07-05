@@ -1,8 +1,12 @@
 import random
 import helpers
+import time
 buttons = [['продажа', 'топиться'],['вылезти', 'ловить']]
 but = helpers.create_keyboard(buttons, rowsWidth=2)
 def enter(bot, user, all_users, location):
+    location["usersData"][user["id"]] = {
+        "wait": False
+    }
 
     bot.send_photo(user["id"], open("assets/swamp/Swamp.png", "rb"), caption = "Вы вошли на болото. Здесь вы можете обменять Ирине Николаевне пойманых вами организмов с помощью 'продажа', а так же ловить эти организмы, утопившись в болоте с помощью 'топиться' ", reply_markup=but)
 
@@ -12,28 +16,28 @@ def leave(bot, user, all_users, location):
 catches = [ {   "name": "stonefly",
                 "runame": "веснянка",
                 "propobilyty": 20,
-                "cost": 7,
+                "cost": 14,
                 "rep": 8,
                 "fun": 5
             },{
                 "name": "frog",
                 "runame": "лягушка",
                 "propobilyty": 30,
-                "cost": 5,
+                "cost": 10,
                 "rep": 3,
                 "fun": 7
             },{
                 "name": "leech",
                 "runame": "пиявка",
                 "propobilyty": 10,
-                "cost": 6,
+                "cost": 12,
                 "rep": 4,
                 "fun": 1
             },{
                 "name": "snail",
                 "runame": "прудовик",
                 "propobilyty": 70,
-                "cost": 3,
+                "cost": 6,
                 "rep": 2,
                 "fun": 1
             }]
@@ -43,14 +47,21 @@ def message(bot, message, user, all_users, location):
         bot.send_message(user["id"], "Вы начали топиться в болоте. Можете прописать 'ловить', чтобы поймать кого-то, или 'вылезти', чтобы перестать топиться", reply_markup=but)
     elif message.text == "ловить":
         if user["action"] == "drowning":
-            bot.send_message(user["id"], "Вы начинаете ловить кого то в болоте.", reply_markup=but)
-            catch=random.choice(catches)
-            if catch["propobilyty"] >= random.randint(0,100):
-                st="Вы поймали нечто! И это - "+catch["runame"]+". Ecли вы хотите вылезти из болота, пропишите 'вылезти'"
-                bot.send_message(user["id"], st, reply_markup=but)
-                user["inventory"].append(catch["name"])
+            if not location["usersData"][user["id"]]["wait"]:
+                location["usersData"][user["id"]]["wait"] = True
+                bot.send_message(user["id"], "Вы начинаете ловить кого то в болоте.", reply_markup=but)
+                catch=random.choice(catches)
+                if catch["propobilyty"] >= random.randint(0,100):
+                    st="Вы поймали нечто! И это - "+catch["runame"]+". Ecли вы хотите вылезти из болота, пропишите 'вылезти'"
+                    bot.send_message(user["id"], st, reply_markup=but)
+                    user["inventory"].append(catch["name"])
+                else:
+                    bot.send_message(user["id"], "Вам не удалось ничего поймать. Можете попробовать снова, или вылезти из болота 'вылезти'", reply_markup=but)
+                time.sleep(10)
+                location["usersData"][user["id"]]["wait"] = False
             else:
-                bot.send_message(user["id"], "Вам не удалось ничего поймать. Можете попробовать снова, или вылезти из болота 'вылезти'", reply_markup=but)
+                bot.send_message(user["id"], "Ловить живность можно раз в 10 секунд", reply_markup=but)
+
     elif message.text == "продажа":
         if user["action"] != "drowning":
             

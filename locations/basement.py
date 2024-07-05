@@ -7,7 +7,7 @@ from telebot import types
 
 basemarkup = helpers.create_keyboard([["Магазин", "Пинг-понг", "Выйти"]])
 
-exitmarkup = helpers.create_keyboard([["Выйти"]])
+exitmarkup = helpers.create_keyboard([["Bыйти"]])
 
 choicemarkup = helpers.create_keyboard([["Да", "Нет"]])
 
@@ -209,7 +209,7 @@ def message(bot, message, user, all_users, location=None):
             # pingpongMainGame
             # waiting 
             elif location["usersData"][user["id"]]["stage"] == 5:
-                if message.text == "Выйти":
+                if message.text == "Bыйти":
                     location["usersData"][user["id"]]["stage"] = 0
                     location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 0
                     location["usersData"][user["id"]]["score"] = [0, 0]
@@ -234,7 +234,7 @@ def message(bot, message, user, all_users, location=None):
                     elif message.text == "Справа":
                         location["usersData"][user["id"]]["shieldChoice"].append(2)
                     if len(location["usersData"][user["id"]]["shieldChoice"]) == 2:
-                        if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] == 4:
+                        if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] != 5:
                             bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты сделал выбор, ожидай противника...", reply_markup=exitmarkup)
                             location["usersData"][user["id"]]["stage"] = 5
                             location["usersData"][user["id"]]["turn"] *= -1
@@ -251,7 +251,7 @@ def message(bot, message, user, all_users, location=None):
                     elif message.text == "Справа":
                         location["usersData"][user["id"]]["attackChoice"] = 2
                     
-                    if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] == 4:
+                    if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] != 5:
                             bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты сделал выбор, ожидай противника...", reply_markup=exitmarkup)
                             location["usersData"][user["id"]]["stage"] = 5
                             location["usersData"][user["id"]]["turn"] *= -1
