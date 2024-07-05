@@ -4,7 +4,7 @@ buttons = [['продажа', 'топиться'],['вылезти', 'ловит
 but = helpers.create_keyboard(buttons, rowsWidth=2)
 def enter(bot, user, all_users, location):
 
-    bot.send_message(user["id"], "Вы вошли на болото. Здесь вы можете обменять Ирине Николаевне пойманых вами организмов с помощью 'продажа', а так же ловить эти организмы, утопившись в болоте с помощью 'топиться' ", reply_markup=but)
+    bot.send_photo(user["id"], open("assets/swamp/Swamp.png", "rb"), caption = "Вы вошли на болото. Здесь вы можете обменять Ирине Николаевне пойманых вами организмов с помощью 'продажа', а так же ловить эти организмы, утопившись в болоте с помощью 'топиться' ", reply_markup=but)
 
 def leave(bot, user, all_users, location):
     pass

@@ -1,9 +1,8 @@
 import telebot
-from config import TOKEN
 from storage import *
 from helpers import *
 
-bot = telebot.TeleBot(TOKEN)
+bot = get_bot()
 
 @bot.message_handler(content_types=['text'])
 def process_message(message):

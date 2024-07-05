@@ -1,7 +1,10 @@
 from storage import *
 import random
+import telebot
+from config import TOKEN
 from telebot import types
 
+bot = telebot.TeleBot(TOKEN)
 
 def get_neighbours(user):
     return list(filter(lambda x: x["location"] == user["location"], users.values()))
@@ -38,16 +41,13 @@ def add_user(message):
         "action": "stay"
     }
 
-
 def is_registered(message):
     return message.from_user.id in users
-
 
 def get_all_users():
     return users.values()
 
-
-def move_player(bot, user, location: str):
+def move_player(bot, user, location:str):
     if location == user["location"]:
         bot.send_message(user["id"], "Вы уже на этой локации")
     else:
@@ -55,16 +55,14 @@ def move_player(bot, user, location: str):
             module = get_module(user)
             all_users = get_neighbours(user)
             module.leave(bot, user, all_users, locations[user['location']])
-
+            
             user["location"] = location
             module = get_module(user)
             all_users = get_neighbours(user)
             module.enter(bot, user, all_users, locations[user['location']])
 
-
 def create_keyboard(buttons, rowsWidth=3):
-    keyboard = types.ReplyKeyboardMarkup(
-        resize_keyboard=True, row_width=rowsWidth)
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=rowsWidth)
 
     for button in buttons + DEFAULT_BUTTONS:
         if type(button) is list:
@@ -74,6 +72,8 @@ def create_keyboard(buttons, rowsWidth=3):
 
     return keyboard
 
+def get_bot():
+    return bot
 
 def give_stats(user, bot):
     text = ""
