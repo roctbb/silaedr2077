@@ -1,4 +1,4 @@
-from locations import balcony, basement, forest, room, sport_ground, street, swamp
+from locations import balcony, basement, forest, room, sport_ground, street, swamp, first_aid_station
 
 users = {}
 
@@ -18,7 +18,10 @@ locations = {
     "forest": {
 
     },
-    "swamp":{
+    "swamp": {
+
+    },
+    'first_aid_station': {
 
     }
 }
@@ -34,8 +37,9 @@ modules = {
     "street": street,
     "basement": basement,
     "swamp": swamp,
-    "forest" : forest,
-    "sport_ground": sport_ground
+    "forest": forest,
+    "sport_ground": sport_ground,
+    'first_aid_station': first_aid_station
 }
 
 paths = {
