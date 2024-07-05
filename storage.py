@@ -4,7 +4,7 @@ users = {}
 
 locations = {
     "room": {
-
+        "usersData": {}
     },
     "balcony": {
 
@@ -28,7 +28,19 @@ locations = {
         "usersData": {}
     }, 
     "sport_ground":{
+        "players": []
+    }, 
+    "choice":{
+        "usersData": {}
+    }, 
+    "eatery":{
+        "usersData": {}
+    }, 
+    "sport_ground":{
 
+    }, 
+    "sport_ground": {
+        "players": []
     }
 }
 
