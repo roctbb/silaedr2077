@@ -74,8 +74,10 @@ def message(bot, message, user, all_users, location):
 
 def events(bot, all_users, location):
     for i in range(len(users)):
-        users["i"]["water"] -= random.randint(0, 1)
-        users["i"]["food"] -= random.randint(0, 1)
+        if users["i"]["water"] > 0:
+            users["i"]["water"] -= random.randint(0, 1)
+        if users["i"]["food"] > 0:
+            users["i"]["food"] -= random.randint(0, 1)
     if random.randint(0, 3) == 0:
         if users["i"]["water"] < 10:
             bot.send_message(users["i"]["id"], "Не забывайти пить воду, у вас меньше 10%")
