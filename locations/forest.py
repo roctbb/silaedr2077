@@ -1,7 +1,7 @@
 import random
 from telebot import types
 
-# from helpers import create_keyboard
+from helpers import create_keyboard
 user1 = {}
 
 DEFAULT_BUTTONS = []
