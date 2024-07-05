@@ -1,57 +1,58 @@
 import json
 DEFAULT_BUTTONS = ["/locations", "/stats"]
 
-with open('save.json', 'r', encoding='utf-8') as f:
-    try:
-        load = json.load(f)
-        users = load[0]
-        locations = load[1]
-    except:
-        users = {}
-        locations = {
-            "room": {
-                "usersData": {}
-            },
-            "balcony": {
+try:
+    with open('save.json', 'r', encoding='utf-8') as f:
+        
+            load = json.load(f)
+            users = load[0]
+            locations = load[1]
+except:
+    users = {}
+    locations = {
+        "room": {
+            "usersData": {}
+        },
+        "balcony": {
 
-            },
-            "basement": {
-                "usersData": {},
-                "StoreOffers": {
-                    #OffererId: [itemName, costValue(cookies)]
-                }
-            },
-            "forest": {
-
-            },
-            "swamp": {
-
-            },
-            "choice": {
-                "usersData": {}
-            },
-            "eatery": {
-                "usersData": {}
-            },
-            "sport_ground": {
-                "players": []
-            },
-            "choice": {
-                "usersData": {}
-            },
-            "eatery": {
-                "usersData": {}
-            },
-            "sport_ground": {
-
-            },
-            "sport_ground": {
-                "players": []
-            },
-            'first_aid_station': {
-
+        },
+        "basement": {
+            "usersData": {},
+            "StoreOffers": {
+                #OffererId: [itemName, costValue(cookies)]
             }
+        },
+        "forest": {
+
+        },
+        "swamp": {
+
+        },
+        "choice": {
+            "usersData": {}
+        },
+        "eatery": {
+            "usersData": {}
+        },
+        "sport_ground": {
+            "players": []
+        },
+        "choice": {
+            "usersData": {}
+        },
+        "eatery": {
+            "usersData": {}
+        },
+        "sport_ground": {
+
+        },
+        "sport_ground": {
+            "players": []
+        },
+        'first_aid_station': {
+
         }
+    }
 
 
 
