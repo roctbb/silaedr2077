@@ -23,7 +23,7 @@ def leave(bot, user, all_users, location=None):
 
 
 def heal(bot, user, location):
-    if (location == 'медпункт'):
+    if (location == 'first_aid_station'):
         user['health'] = user['max_health']
         bot.send_message(user["id"], "Вы восстановили здоровье ❤️‍🩹" +
                          '\n' + "Ваше здоровье: " + str(user['max_health']))
