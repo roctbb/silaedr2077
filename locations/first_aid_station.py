@@ -11,10 +11,7 @@ def enter(bot, user, all_users, location):
     item1 = types.KeyboardButton("Выйти")
     item5 = types.KeyboardButton("лечиться")
     basemarkup.add(item1, item5)
-    bot.send_message(user["id"], "Вы зашли в медпункт",
-                     reply_markup=basemarkup)
-    photo = open('assets/first_aid_station.png', 'rb')
-    bot.send_photo(user['id'], photo)
+    bot.send_photo(user["id"], open('assets/first_aid_station.png', 'rb'), caption="Вы зашли в медпункт", reply_markup=basemarkup)
 
 
 def leave(bot, user, all_users, location=None):

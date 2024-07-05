@@ -1,0 +1,66 @@
+[
+    {
+        "962799806": {
+            "id": 962799806,
+            "name": "Ilia Buslaev",
+            "cookies": 48,
+            "food": 66,
+            "water": 100,
+            "health": 30,
+            "max_health": 30,
+            "corners": 4,
+            "knowledge": 0,
+            "reputation": 67,
+            "fun": 94,
+            "inventory": [
+                "laptop",
+                "phone",
+                "bottle",
+                "badge - Ilia Buslaev"
+            ],
+            "location": "choice",
+            "action": "stay"
+        }
+    },
+    {
+        "room": {
+            "usersData": {}
+        },
+        "balcony": {},
+        "basement": {
+            "usersData": {
+                "962799806": {
+                    "playtennisConnection": null,
+                    "stage": 0,
+                    "shieldChoice": [],
+                    "attackChoice": 0,
+                    "turn": -1,
+                    "score": [
+                        0,
+                        0
+                    ],
+                    "wait": false,
+                    "buyItem": [],
+                    "sellItem": []
+                }
+            },
+            "StoreOffers": {}
+        },
+        "forest": {},
+        "swamp": {},
+        "choice": {
+            "usersData": {
+                "962799806": {
+                    "stage": 0
+                }
+            }
+        },
+        "eatery": {
+            "usersData": {}
+        },
+        "sport_ground": {
+            "players": []
+        },
+        "first_aid_station": {}
+    }
+]
