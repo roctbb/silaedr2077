@@ -1,0 +1,91 @@
+[
+    {
+        "1900804197": {
+            "id": "1900804197",
+            "name": "Якунин Рома",
+            "cookies": 54,
+            "food": 79,
+            "water": 94,
+            "health": 20,
+            "max_health": 25,
+            "corners": 4,
+            "knowledge": 0,
+            "reputation": 67,
+            "fun": 98,
+            "inventory": [
+                "laptop",
+                "phone",
+                "bottle",
+                "badge - Якунин Рома"
+            ],
+            "location": "room",
+            "action": "stay"
+        },
+        "2020474300": {
+            "id": "2020474300",
+            "name": "I. R.",
+            "cookies": 35,
+            "food": 51,
+            "water": 56,
+            "health": 20,
+            "max_health": 20,
+            "corners": 4,
+            "knowledge": 0,
+            "reputation": 64,
+            "fun": 80,
+            "inventory": [
+                "laptop",
+                "phone",
+                "bottle",
+                "badge - I. R."
+            ],
+            "location": "choice",
+            "action": "stay"
+        }
+    },
+    {
+        "room": {
+            "usersData": {
+                "2020474300": {
+                    "room": 304
+                }
+            }
+        },
+        "balcony": {},
+        "basement": {
+            "usersData": {
+                "2020474300": {
+                    "playtennisConnection": null,
+                    "stage": 0,
+                    "shieldChoice": [],
+                    "attackChoice": 0,
+                    "turn": -1,
+                    "score": [
+                        0,
+                        0
+                    ],
+                    "wait": false,
+                    "buyItem": [],
+                    "sellItem": []
+                }
+            },
+            "StoreOffers": {}
+        },
+        "forest": {},
+        "swamp": {},
+        "choice": {
+            "usersData": {
+                "2020474300": {
+                    "stage": 0
+                }
+            }
+        },
+        "eatery": {
+            "usersData": {}
+        },
+        "sport_ground": {
+            "players": []
+        },
+        "first_aid_station": {}
+    }
+]
