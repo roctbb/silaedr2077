@@ -4,7 +4,7 @@ users = {}
 
 locations = {
     "room": {
-
+        "usersData": {}
     },
     "balcony": {
 
