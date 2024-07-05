@@ -1,10 +1,9 @@
 import telebot
-from config import TOKEN
 from storage import *
 from helpers import *
 import time
 
-bot = telebot.TeleBot(TOKEN)
+bot = get_bot()
 
 isCycleStarted = False
 

@@ -1,7 +1,10 @@
 from storage import *
 import random
+import telebot
+from config import TOKEN
 from telebot import types
 
+bot = telebot.TeleBot(TOKEN)
 
 def get_neighbours(user):
     return list(filter(lambda x: x["location"] == user["location"], users.values()))
@@ -67,3 +70,6 @@ def create_keyboard(buttons, rowsWidth=3):
             keyboard.add(types.KeyboardButton(button))
 
     return keyboard
+
+def get_bot():
+    return bot
