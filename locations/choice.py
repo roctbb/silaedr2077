@@ -49,6 +49,12 @@ def message(bot, message, user, all_users, location):
             move_player(bot, user, "eatery")
         elif message.text.isdigit():
             if int(message.text) in rooms[3]:
+                if user["id"] in locations["room"]["usersData"].keys():
+                    locations["room"]["usersData"][user["id"]]["room"] = int(message.text)
+                else:
+                    locations["room"]["usersData"][user["id"]]["room"] = {
+                        "room": int(message.text)
+                    }
                 move_player(bot, user, "room")
         else:
             bot.send_message(user["id"], "Пользуйся кнопками!")
@@ -58,6 +64,12 @@ def message(bot, message, user, all_users, location):
             location["usersData"][user["id"]]["stage"] = 0
         elif message.text.isdigit():
             if int(message.text) in rooms[4]:
+                if user["id"] in locations["room"]["usersData"].keys():
+                    locations["room"]["usersData"][user["id"]]["room"] = int(message.text)
+                else:
+                    locations["room"]["usersData"][user["id"]]["room"] = {
+                        "room": int(message.text)
+                    }
                 move_player(bot, user, "room")
         else:
             bot.send_message(user["id"], "Пользуйся кнопками!")
