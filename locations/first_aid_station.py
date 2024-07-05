@@ -4,7 +4,7 @@ import telebot
 from telebot import types
 
 
-def enter(bot, user, all_users, location, assets):
+def enter(bot, user, all_users, location):
     basemarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("/room")
     item2 = types.KeyboardButton("/basement")
