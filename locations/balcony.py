@@ -7,7 +7,8 @@ def enter(bot, user, all_users, location, previous_location=None):
     bot.send_message(user["id"], "Вы вышли на балкон", reply_markup=basemarkup)
 
 def leave(bot, user, all_users, location=None):
-    bot.send_message(user["id"], "Вы ушли с балкона")
+    pass
+    #bot.send_message(user["id"], "Вы ушли с балкона")
 
 def message(bot, message, user, all_users, location=None):
     if message.text.startswith("Выйти"):
@@ -31,3 +32,4 @@ def shout(bot, message):
 
 def jump(bot, user):
     bot.send_photo(user["id"], open("assets/balcony/backrooms/base.jpg", 'rb'), caption="Вы спрыгнули с балкона и провалились в backrooms...")
+    helpers.move_player(bot, user, "first_aid_station")
