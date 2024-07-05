@@ -18,29 +18,32 @@ locations = {
     "forest": {
 
     },
-    "swamp":{
+    "swamp": {
 
-    }, 
-    "choice":{
+    },
+    "choice": {
         "usersData": {}
-    }, 
-    "eatery":{
+    },
+    "eatery": {
         "usersData": {}
-    }, 
-    "sport_ground":{
-        "players": []
-    }, 
-    "choice":{
-        "usersData": {}
-    }, 
-    "eatery":{
-        "usersData": {}
-    }, 
-    "sport_ground":{
-
-    }, 
+    },
     "sport_ground": {
         "players": []
+    },
+    "choice": {
+        "usersData": {}
+    },
+    "eatery": {
+        "usersData": {}
+    },
+    "sport_ground": {
+
+    },
+    "sport_ground": {
+        "players": []
+    },
+    'first_aid_station': {
+
     }
 }
 

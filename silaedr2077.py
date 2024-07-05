@@ -1,3 +1,4 @@
+import assets
 import telebot
 from config import TOKEN
 from storage import *
@@ -7,6 +8,7 @@ import time
 bot = telebot.TeleBot(TOKEN)
 
 isCycleStarted = False
+
 
 @bot.message_handler(content_types=['text'])
 def process_message(message):
@@ -19,10 +21,7 @@ def process_message(message):
     if message.text == "/locations":
         bot.send_message(user["id"], "/" + '\n/'.join(locations.keys()))
     elif message.text == "/stats":
-        text = ""
-        text += "Здоровье " + str(user['health']) + "\n" "Печеньки(валюта) " + str(user['cookies']) + "\n" + "Еда " + str(user['food']) + "\n" + "Вода " + str(user['water']) + "\n" + "Уголки " + str(user['corners']) + "\n" + "Веселье " + str(
-            user['fun']) + "\n" + "Локация " + str(user['location']) + "\n" + "Репутация " + str(user['reputation']) + "\n" + "инвентарь " + ', '.join(user['inventory']) + "\n" + "знания " + str(user['knowledge'])
-        bot.send_message(user['id'], text)
+        give_stats(user, bot)
     elif message.text == "/startEventCycle":
         if isCycleStarted:
             bot.send_message(user["id"], "Уже запущено")
@@ -42,6 +41,8 @@ def process_message(message):
         module = get_module(user)
         all_users = get_neighbours(user)
 
-        module.message(bot, message, user, all_users, locations[user['location']])
+        module.message(bot, message, user, all_users,
+                       locations[user['location']])
+
 
 bot.polling(none_stop=True)
