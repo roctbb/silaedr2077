@@ -52,7 +52,7 @@ def message(bot, message, user, all_users, location):
                 if user["id"] in locations["room"]["usersData"].keys():
                     locations["room"]["usersData"][user["id"]]["room"] = int(message.text)
                 else:
-                    locations["room"]["usersData"][user["id"]]["room"] = {
+                    locations["room"]["usersData"][user["id"]] = {
                         "room": int(message.text)
                     }
                 move_player(bot, user, "room")
@@ -67,7 +67,7 @@ def message(bot, message, user, all_users, location):
                 if user["id"] in locations["room"]["usersData"].keys():
                     locations["room"]["usersData"][user["id"]]["room"] = int(message.text)
                 else:
-                    locations["room"]["usersData"][user["id"]]["room"] = {
+                    locations["room"]["usersData"][user["id"]] = {
                         "room": int(message.text)
                     }
                 move_player(bot, user, "room")
