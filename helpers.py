@@ -33,7 +33,7 @@ def add_user(message):
         "knowledge": 0,
         "reputation": random.randint(30, 80),
         "fun": random.randint(80, 100),
-        "inventory": ["laptop", "phone", "bottle", "badge"],
+        "inventory": ["laptop", "phone", "bottle", f"badge - {name}"],
         "location": "room",
         "action": "stay"
     }
