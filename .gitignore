@@ -2,7 +2,6 @@ config.py
 .idea
 eugen_tests.py
 tests.py
-save
 save.json
 __pycache__
 test
