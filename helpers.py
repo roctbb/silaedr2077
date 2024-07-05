@@ -3,6 +3,7 @@ import random
 import telebot
 from config import TOKEN
 from telebot import types
+import json
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -89,3 +90,16 @@ def give_stats(user, bot):
     text += "❤️ Здоровье - " + str(user['health']) + '/' + str(user['max_health']) + "\n" "🍪 Печеньки(валюта) - " + str(user['cookies']) + "\n" + "🍟 Еда - " + str(user['food']) + "\n" + "💧 Вода - " + str(user['water']) + "\n" + "📃 Уголки - " + str(user['corners']) + "\n" + "😄 Веселье - " + str(
         user['fun']) + "\n" + "🏘 Локация - " + str(user['location']) + "\n" + "🫂 Репутация - " + str(user['reputation']) + "\n" + "🎒 инвентарь - " + ', '.join(user['inventory']) + "\n" + "👨‍🏫 знания - " + str(user['knowledge'])
     bot.send_message(user['id'], text)
+
+def save_data():
+    with open('save.json', 'w', encoding='utf-8') as f:
+        json.dump([users, locations], f, ensure_ascii=False, indent=4)
+
+def load_data():
+    with open('save.json', 'r') as openfile:
+        try:
+            load = json.load(openfile)
+            users = load[0]
+            locations = load[1]
+        except:
+            print("can't load save sata")
