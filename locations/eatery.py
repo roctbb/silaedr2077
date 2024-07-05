@@ -55,7 +55,8 @@ def message(bot, message, user, all_users, location):
         elif message.text == "Украсть печеньку":
             rng = random.randint(1, 5)
             if random.randint(1, 10) == 1 or user["reputation"]<20:
-                user["corners"] -= 1
+                if user["corners"] > 0:
+                    user["corners"] -= 1
                 bot.send_message(user["id"], f"Вас спалили, забрали уголок :(\n-1 уголок🔼")
             else:
                 user["cookies"] += rng
