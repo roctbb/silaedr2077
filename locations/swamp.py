@@ -40,6 +40,13 @@ catches = [ {   "name": "stonefly",
                 "cost": 6,
                 "rep": 2,
                 "fun": 1
+            },{
+                "name": "TREASURE",
+                "runame": "КЛАД",
+                "propobilyty": 2,
+                "cost": 500,
+                "rep": 2,
+                "fun": 1
             }]
 def message(bot, message, user, all_users, location):
     if message.text == "топиться":
@@ -60,13 +67,15 @@ def message(bot, message, user, all_users, location):
                 time.sleep(10)
                 location["usersData"][user["id"]]["wait"] = False
             else:
-                bot.send_message(user["id"], "Ловить живность можно раз в 10 секунд", reply_markup=but)
-
+                if random.randint(0, 5) == 0:
+                    bot.send_message(user["id"], "Ловить живность можно раз в 10 секунд", reply_markup=but)
+        else:
+            bot.send_message(user["id"], "Сначала нужно утопиться", reply_markup=but)
     elif message.text == "продажа":
         if user["action"] != "drowning":
             
             length_of_sell=0
-            while ("leech" in user["inventory"] or "snail" in user["inventory"] or "stonefly" in user["inventory"] or "frog" in user["inventory"]) and length_of_sell<1000:
+            while ("TREASURE" in user["inventory"] or "leech" in user["inventory"] or "snail" in user["inventory"] or "stonefly" in user["inventory"] or "frog" in user["inventory"]) and length_of_sell<1000:
                 counter_of_swamp_sell = -1
                 length_of_sell+=1
                 for i in user["inventory"]:

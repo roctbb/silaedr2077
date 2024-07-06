@@ -3,10 +3,9 @@ DEFAULT_BUTTONS = ["/locations", "/stats"]
 
 try:
     with open('save.json', 'r', encoding='utf-8') as f:
-        
-            load = json.load(f)
-            users = load[0]
-            locations = load[1]
+        load = json.load(f)
+        users = load[0]
+        locations = load[1]
 except:
     users = {}
     locations = {
@@ -14,7 +13,7 @@ except:
             "usersData": {}
         },
         "balcony": {
-
+            "usersData": {}
         },
         "basement": {
             "usersData": {},
@@ -23,10 +22,10 @@ except:
             }
         },
         "forest": {
-
+            "usersData": {}
         },
         "swamp": {
-            
+            "usersData": {}
         },
         "choice": {
             "usersData": {}
@@ -44,13 +43,13 @@ except:
             "usersData": {}
         },
         "sport_ground": {
-
+            "usersData": {}
         },
         "sport_ground": {
             "players": []
         },
         'first_aid_station': {
-
+            "usersData": {}
         }
     }
 

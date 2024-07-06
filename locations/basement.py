@@ -177,7 +177,18 @@ def message(bot, message, user, all_users, location=None):
                                     bot.send_message(user["id"], "У вас недостаточно печенек🍪 :(", reply_markup=basemarkup)
                                     location["usersData"][user["id"]]["stage"] = 0
                     if flag:
-                        bot.send_message(user["id"], "Такого предмета нет на рынке(возможно его уже кто-то купил)")
+                        for key in location["StoreOffers"].keys():
+                            for i in location["StoreOffers"][key]:
+                                if message.text == "Снять с продажи " + i[0] and key == user["id"]:
+                                    flag = False
+                        
+                        if flag:
+                            bot.send_message(user["id"], "Такого предмета нет на рынке(возможно его уже кто-то купил)")
+                        else:
+                            location["StoreOffers"][key].remove([i[0], i[1]])
+                            users[user["id"]]["inventory"].append(i[0])
+                            bot.send_message(user["id"], fr"Ты успешно снял предмет с продажи", reply_markup=shopmarkup)
+                            location["usersData"][user["id"]]["stage"] = 6
             #shop base
             elif location["usersData"][user["id"]]["stage"] == 6:
                 if message.text == "Bыйти":
@@ -193,7 +204,10 @@ def message(bot, message, user, all_users, location=None):
                         n = []
                         for key in location["StoreOffers"].keys():
                             for i in location["StoreOffers"][key]:
-                                n.append(i[0] + " " + str(i[1]) + "🍪")
+                                if key != user["id"]:
+                                    n.append(i[0] + " " + str(i[1]) + "🍪")
+                                else:
+                                    n.append("Снять с продажи " + i[0])
                         buymarkup = helpers.create_keyboard([["Назад"], n], rowsWidth=2)
                         bot.send_message(user["id"], "Выберите предложение", reply_markup=buymarkup)
                         location["usersData"][user["id"]]["stage"] = 7
