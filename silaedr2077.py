@@ -25,8 +25,7 @@ try:
             all_users = get_neighbours(user)
 
             module.message(bot, message, user, all_users,
-                        locations[user['location']])
-
+                           locations[user['location']])
 
     bot.polling(none_stop=True)
 except:

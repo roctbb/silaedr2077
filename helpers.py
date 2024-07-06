@@ -91,9 +91,11 @@ def give_stats(user, bot):
         user['fun']) + "\n" + "🏘 Локация - " + str(user['location']) + "\n" + "🫂 Репутация - " + str(user['reputation']) + "\n" + "🎒 инвентарь - " + ', '.join(user['inventory']) + "\n" + "👨‍🏫 знания - " + str(user['knowledge'])
     bot.send_message(user['id'], text)
 
+
 def save_data():
     with open('save.json', 'w', encoding='utf-8') as f:
         json.dump([users, locations], f, ensure_ascii=False, indent=4)
+
 
 def load_data():
     with open('save.json', 'r') as openfile:
