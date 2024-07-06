@@ -27,8 +27,8 @@ def add_user(message):
         name += " "
         name += message.from_user.last_name
 
-    users[message.from_user.id] = {
-        "id": message.from_user.id,
+    users[str(message.from_user.id)] = {
+        "id": str(message.from_user.id),
         "name": name,
         "cookies": random.randint(10, 60),
         "food": random.randint(50, 100),
@@ -46,7 +46,7 @@ def add_user(message):
 
 
 def is_registered(message):
-    return message.from_user.id in users
+    return str(message.from_user.id) in users
 
 
 def get_all_users():
@@ -95,13 +95,3 @@ def give_stats(user, bot):
 def save_data():
     with open('save.json', 'w', encoding='utf-8') as f:
         json.dump([users, locations], f, ensure_ascii=False, indent=4)
-
-
-def load_data():
-    with open('save.json', 'r') as openfile:
-        try:
-            load = json.load(openfile)
-            users = load[0]
-            locations = load[1]
-        except:
-            print("can't load save sata")
