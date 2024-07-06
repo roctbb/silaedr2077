@@ -36,6 +36,12 @@ def enter(bot, user, all_users, location):
 
 
 def leave(bot, user, all_users, location=None):
+    if location["usersData"][user["id"]]["playtennisConnection"] != None:
+        bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], "Твой противник резко вышел из подвала", reply_markup=basemarkup)
+        location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 0
+        location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["score"] = [0, 0]
+        location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["shieldChoice"] = []
+        location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["playtennisConnection"] = None
     bot.send_photo(user["id"], open("assets/basement/exit.jpg", "rb"), caption="Ты вышел из подвала :(")
 
 def checkShielder(bot, message, user, all_users, location):
@@ -276,7 +282,7 @@ def message(bot, message, user, all_users, location=None):
 
             # cansel if u are tennis host + waiting for opponent to confirm -----------------------------
             elif location["usersData"][user["id"]]["stage"] == 3:
-                if message.text == "Выйти":
+                if message.text == "Bыйти":
                     location["usersData"][user["id"]]["stage"] = 0
                     bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Вы вышли в главное меню", reply_markup=basemarkup)
                     location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 0
@@ -368,5 +374,6 @@ def message(bot, message, user, all_users, location=None):
         bot.send_message(user["id"], "Ждите окончания перехода...")
 
 def events(bot, all_users, location=None):
-    for i in all_users:
-        bot.send_message(i["id"], "Ивент!!")
+    pass
+    #for i in all_users:
+    #    bot.send_message(i["id"], "Ивент!!")
