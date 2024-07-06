@@ -105,7 +105,7 @@ def message(bot, message, user, all_users, location=None):
             location["usersData"][user["id"]]["wait"] = True
             # shop sell cost
             if location["usersData"][user["id"]]["stage"] == 10:
-                if message.text == "Назад":
+                if message.text == "Bыйти":
                     location["usersData"][user["id"]]["stage"] = 8
                     bot.send_message(user["id"], "Ты вернулся назад", reply_markup=helpers.create_keyboard([["Назад"], user["inventory"]]))
                 else:
@@ -187,14 +187,19 @@ def message(bot, message, user, all_users, location=None):
                             for i in location["StoreOffers"][key]:
                                 if message.text == "Снять с продажи " + i[0] and key == user["id"]:
                                     flag = False
+                                    key1 = key
+                                    ins = [i[0], i[1]]
                         
                         if flag:
                             bot.send_message(user["id"], "Такого предмета нет на рынке(возможно его уже кто-то купил)")
                         else:
-                            location["StoreOffers"][key].remove([i[0], i[1]])
-                            users[user["id"]]["inventory"].append(i[0])
-                            bot.send_message(user["id"], fr"Ты успешно снял предмет с продажи", reply_markup=shopmarkup)
-                            location["usersData"][user["id"]]["stage"] = 6
+                            if [i[0], i[1]] in location["StoreOffers"][key1]:
+                                location["StoreOffers"][key1].remove(ins)
+                                users[user["id"]]["inventory"].append(ins[0])
+                                bot.send_message(user["id"], fr"Ты успешно снял предмет с продажи", reply_markup=shopmarkup)
+                                location["usersData"][user["id"]]["stage"] = 6
+                            else:
+                                bot.send_message(user["id"], "Такого предмета нет на рынке(возможно его уже кто-то купил)")
             #shop base
             elif location["usersData"][user["id"]]["stage"] == 6:
                 if message.text == "Bыйти":
