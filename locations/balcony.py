@@ -19,7 +19,7 @@ def message(bot, message, user, all_users, location=None):
     if message.text.startswith("Прыгнуть"):
         jump(bot, user)
 
-def events(bot, all_users):
+def events(bot, all_users, location):
     pass
 
 def shouter(message):

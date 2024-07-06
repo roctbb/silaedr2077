@@ -354,4 +354,5 @@ def message(bot, message, user, all_users, location=None):
         bot.send_message(user["id"], "Ждите окончания перехода...")
 
 def events(bot, all_users, location=None):
-    pass
+    for i in all_users:
+        bot.send_message(i["id"], "Ивент!!")

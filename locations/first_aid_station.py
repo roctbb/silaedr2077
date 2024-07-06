@@ -34,3 +34,6 @@ def message(bot, message, user, all_users, location):
         heal(bot, user, user['location'])
     elif message.text == "Выйти":
         helpers.move_player(bot, user, "choice")
+
+def events(bot, all_users, location=None):
+    pass
