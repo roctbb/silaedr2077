@@ -13,7 +13,7 @@ def enter(bot, user, all_users, location):
     item5 = types.KeyboardButton("лечиться")
     basemarkup.add(item1, item5)
     bot.send_photo(user["id"], open('assets/first_aid_station.png', 'rb'),
-                   caption="Вы зашли в медпункт", reply_markup=basemarkup)
+                   caption="Вы зашли в медпункт." + '\n' + "Здесь вы лечитесь каждые 5 минут на 10 хп.", reply_markup=basemarkup)
 
 
 def leave(bot, user, all_users, location=None):
@@ -22,11 +22,12 @@ def leave(bot, user, all_users, location=None):
 
 
 def events(bot, all_users, location=None):
-    for i in all_users:
-        print(i["id"])
-    # user[]['health'] = user['max_health']
-    # bot.send_message(user["id"], "Вы восстановили здоровье ❤️‍🩹" +
-    #                 '\n' + "Ваше здоровье: " + str(user['max_health']))
+    for user in all_users:
+        print(user["id"])
+        if user['health'] < user['max_health']:
+            user['health'] += 10
+            bot.send_message(user["id"], "Вы восстановили 10 здоровья ❤️‍🩹" +
+                             '\n' + f"Ваше здоровье: {user['health']}/{user['max_health']}")
 
 
 def heal(bot, user, location):
@@ -42,10 +43,11 @@ def heal(bot, user, location):
 
 
 def message(bot, message, user, all_users, location):
-    if message.text == "лечиться":
-        heal(bot, user, user['location'])
-    elif message.text == "Выйти":
+    # if message.text == "лечиться":
+    #    heal(bot, user, user['location'])
+    if message.text == "Выйти":
         helpers.move_player(bot, user, "choice")
+
 
 def reset(user, location):
     pass
