@@ -146,8 +146,6 @@ def play(bot, user):
                     bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием и отрезала уголок",
                                      reply_markup=bm)
                     user["corners"] -= 1
-                    if user["corners"] == 0:
-                        reset(user)
                 user["fun"] -= 50
                 if user["fun"] < 0:
                     user["fun"] = 0
@@ -193,7 +191,6 @@ def down(bot, user):
         bot.send_message(user["id"], "Вы не на дереве!")
 
 
-def reset(user):
-    del user1[user["id"]]
-
+def reset(user, location):
+    #del user1[user["id"]]
     pass
