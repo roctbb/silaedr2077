@@ -1,51 +1,60 @@
+import json
 DEFAULT_BUTTONS = ["/locations", "/stats"]
 
-users = {}
-
-locations = {
-    "room": {
-        "usersData": {}
-    },
-    "balcony": {
-
-    },
-    "basement": {
-        "usersData": {},
-        "StoreOffers": {
-            #OffererId: [itemName, costValue(cookies)]
+try:
+    with open('save.json', 'r', encoding='utf-8') as f:
+        load = json.load(f)
+        users = load[0]
+        locations = load[1]
+except:
+    users = {}
+    locations = {
+        "room": {
+            "usersData": {}
+        },
+        "balcony": {
+            "usersData": {}
+        },
+        "basement": {
+            "usersData": {},
+            "StoreOffers": {
+                #OffererId: [itemName, costValue(cookies)]
+            }
+        },
+        "forest": {
+            "usersData": {}
+        },
+        "swamp": {
+            "usersData": {}
+        },
+        "choice": {
+            "usersData": {}
+        },
+        "eatery": {
+            "usersData": {}
+        },
+        "sport_ground": {
+            "players": []
+        },
+        "choice": {
+            "usersData": {}
+        },
+        "eatery": {
+            "usersData": {}
+        },
+        "sport_ground": {
+            "usersData": {}
+        },
+        "sport_ground": {
+            "players": []
+        },
+        'first_aid_station': {
+            "usersData": {}
         }
-    },
-    "forest": {
-
-    },
-    "swamp": {
-
-    },
-    "choice": {
-        "usersData": {}
-    },
-    "eatery": {
-        "usersData": {}
-    },
-    "sport_ground": {
-        "players": []
-    },
-    "choice": {
-        "usersData": {}
-    },
-    "eatery": {
-        "usersData": {}
-    },
-    "sport_ground": {
-
-    },
-    "sport_ground": {
-        "players": []
-    },
-    'first_aid_station': {
-
     }
-}
+
+
+
 
 rooms = {
     3: (304, 307, 312, 314, 315, 316, 317, 318, 333, 321, 322, 323, 327, 329, 330, 332),

@@ -3,7 +3,7 @@ from storage import *
 
 basemarkup = create_keyboard([["Подвал", "Улица"], ["3 этаж"], ["4 этаж"]])
 
-outsidemarkup = create_keyboard([["Болото", "Лес", "Спорт площадка"]])
+outsidemarkup = create_keyboard([["Болото", "Лес", "Спорт площадка"], ["Назад"]])
 
 floor3markup = create_keyboard([["Отмена", "Столовая"], list(rooms[3])], rowsWidth=7)
 floor4markup = create_keyboard([["Отмена"], list(rooms[4])], rowsWidth=7)
@@ -22,7 +22,7 @@ def message(bot, message, user, all_users, location):
         if message.text == "Подвал":
             move_player(bot, user, "basement")
         elif message.text == "Улица":
-            bot.send_message(user["id"], "Выбери куда локацию", reply_markup=outsidemarkup)
+            bot.send_message(user["id"], "Выбери куда пойти", reply_markup=outsidemarkup)
             location["usersData"][user["id"]]["stage"] = 1
         elif message.text == "3 этаж":
             bot.send_message(user["id"], "Выбери номер комнаты/столовку", reply_markup=floor3markup)
@@ -33,7 +33,10 @@ def message(bot, message, user, all_users, location):
         else:
             bot.send_message(user["id"], "Пользуйся кнопками!")
     elif location["usersData"][user["id"]]["stage"] == 1:
-        if message.text == "Болото":
+        if message.text == "Назад":
+            bot.send_message(user["id"], "Выбери куда пойти", reply_markup=basemarkup)
+            location["usersData"][user["id"]]["stage"] = 0
+        elif message.text == "Болото":
             move_player(bot, user, "swamp")
         elif message.text == "Лес":
             move_player(bot, user, "forest")
@@ -75,5 +78,5 @@ def message(bot, message, user, all_users, location):
             bot.send_message(user["id"], "Пользуйся кнопками!")
 
 
-def events(bot, all_users):
+def events(bot, all_users, location=None):
     pass

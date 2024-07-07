@@ -1,10 +1,16 @@
 from storage import *
 import random
+import telebot
+from config import TOKEN
 from telebot import types
+import json
+
+bot = telebot.TeleBot(TOKEN)
 
 
 def get_neighbours(user):
     return list(filter(lambda x: x["location"] == user["location"], users.values()))
+
 
 def get_module(user):
     from modules import available_modules
@@ -21,8 +27,8 @@ def add_user(message):
         name += " "
         name += message.from_user.last_name
 
-    users[message.from_user.id] = {
-        "id": message.from_user.id,
+    users[str(message.from_user.id)] = {
+        "id": str(message.from_user.id),
         "name": name,
         "cookies": random.randint(10, 60),
         "food": random.randint(50, 100),
@@ -33,14 +39,14 @@ def add_user(message):
         "knowledge": 0,
         "reputation": random.randint(30, 80),
         "fun": random.randint(80, 100),
-        "inventory": ["laptop", "phone", "bottle", "badge"],
+        "inventory": ["laptop", "phone", "bottle", f"badge - {name}"],
         "location": "room",
         "action": "stay"
     }
 
 
 def is_registered(message):
-    return message.from_user.id in users
+    return str(message.from_user.id) in users
 
 
 def get_all_users():
@@ -75,8 +81,17 @@ def create_keyboard(buttons, rowsWidth=3):
     return keyboard
 
 
+def get_bot():
+    return bot
+
+
 def give_stats(user, bot):
     text = ""
-    text += "❤️ Здоровье - " + str(user['health']) + '/' + str(user['max_health']) + "\n" "💵 Деньги - " + str(user['cookies']) + "\n" + "🍟 Еда - " + str(user['food']) + "\n" + "💧 Вода - " + str(user['water']) + "\n" + "📃 Уголки - " + str(user['corners']) + "\n" + "😄 Веселье - " + str(
+    text += "❤️ Здоровье - " + str(user['health']) + '/' + str(user['max_health']) + "\n" "🍪 Печеньки(валюта) - " + str(user['cookies']) + "\n" + "🍟 Еда - " + str(user['food']) + "\n" + "💧 Вода - " + str(user['water']) + "\n" + "📃 Уголки - " + str(user['corners']) + "\n" + "😄 Веселье - " + str(
         user['fun']) + "\n" + "🏘 Локация - " + str(user['location']) + "\n" + "🫂 Репутация - " + str(user['reputation']) + "\n" + "🎒 инвентарь - " + ', '.join(user['inventory']) + "\n" + "👨‍🏫 знания - " + str(user['knowledge'])
     bot.send_message(user['id'], text)
+
+
+def save_data():
+    with open('save.json', 'w', encoding='utf-8') as f:
+        json.dump([users, locations], f, ensure_ascii=False, indent=4)

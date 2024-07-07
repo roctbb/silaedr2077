@@ -1,7 +1,7 @@
 from helpers import *
 
 
-basemarkup = create_keyboard([["В разработке..."]])
+basemarkup = create_keyboard([["Выйти на балкон", "Выйти"]])
 
 def enter(bot, user, all_users, location):
     if not location["usersData"].get(user["id"]):
@@ -16,7 +16,15 @@ def leave(bot, user, all_users, location):
     pass
 
 def message(bot, message, user, all_users, location):
-    pass
+    if message.text == "Выйти на балкон":
+        move_player(bot, user, "balcony")
+        return
+    elif message.text == "Выйти":
+        move_player(bot, user, "choice")
+    else:
+        bot.send_message(user["id"], "Используй кнопки!")
+
+
 
 
 def events(bot, all_users, location):

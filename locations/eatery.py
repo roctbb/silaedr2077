@@ -3,7 +3,7 @@ from datetime import datetime
 import random
 from storage import *
 
-basemarkup = create_keyboard([["Поесть", "Попить", "Украсть печеньку"], ["Выйти"]])
+basemarkup = create_keyboard([["Поесть", "Попить", "Украсть печеньку", "Налить воды"], ["Выйти"]])
 
 def enter(bot, user, all_users, location):
     if user["id"] not in location["usersData"].keys():
@@ -40,7 +40,7 @@ def message(bot, message, user, all_users, location):
                 if rng > 100-user["food"]:
                     rng = 100-user["food"]
                 user["food"] += rng
-                bot.send_message(user["id"], f"Вы поели\n+{rng}🍗")
+                bot.send_message(user["id"], f"Вы поели\n+{rng}🍟")
             else:
                 bot.send_message(user["id"], "Вы не хотите есть")
         elif message.text == "Попить":
@@ -49,7 +49,7 @@ def message(bot, message, user, all_users, location):
                 if rng > 100-user["water"]:
                     rng = 100-user["water"]
                 user["water"] += rng
-                bot.send_message(user["id"], f"Вы попили\n+{rng}💦")
+                bot.send_message(user["id"], f"Вы попили\n+{rng}💧")
             else:
                 bot.send_message(user["id"], "Вы не хотите пить")
         elif message.text == "Украсть печеньку":
@@ -74,13 +74,13 @@ def message(bot, message, user, all_users, location):
 
 
 def events(bot, all_users, location):
-    for i in range(len(users)):
-        if users["i"]["water"] > 0:
-            users["i"]["water"] -= random.randint(0, 1)
-        if users["i"]["food"] > 0:
-            users["i"]["food"] -= random.randint(0, 1)
+    for i in users.keys():
+        if users[i]["water"] > 0:
+            users[i]["water"] -= random.randint(0, 1)
+        if users[i]["food"] > 0:
+            users[i]["food"] -= random.randint(0, 1)
     if random.randint(0, 3) == 0:
-        if users["i"]["water"] < 10:
-            bot.send_message(users["i"]["id"], "Не забывайти пить воду, у вас меньше 10%")
-        if users["i"]["food"] < 10:
-            bot.send_message(users["i"]["id"], "Не забывайти есть, у вас меньше 10%")
+        if users[i]["water"] < 10:
+            bot.send_message(users[i]["id"], "Не забывайти пить воду, у вас меньше 10%")
+        if users[i]["food"] < 10:
+            bot.send_message(users[i]["id"], "Не забывайти есть, у вас меньше 10%")
