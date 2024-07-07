@@ -1,23 +1,26 @@
 import random
 import helpers
 import time
-buttons = [['продажа', 'топиться'],['вылезти', 'ловить']]
+buttons = [['продажа', 'топиться'],['вылезти', 'ловить','выход']]
 but = helpers.create_keyboard(buttons, rowsWidth=2)
 def enter(bot, user, all_users, location):
+    realtime = time.localtime() 
+    current_time = time.strftime("%YYYY:%MM:%DD", realtime)
     if user["id"] not in list(location["usersData"].keys()):
         location["usersData"][user["id"]] = {
             "wait": False, 
-            "enters" : 0,
-            "catching": 0
+            "enters" : 1,
+            "catching": 0, 
+            "lastEnter": current_time
         }
     else:
+        if current_time != location["usersData"][user["id"]]["lastEnter"]:
+            location["usersData"][user["id"]]["enters"] = 0
         location["usersData"][user["id"]]["enters"] += 1
+        location["usersData"][user["id"]]["lastEnter"] = current_time
 
     bot.send_photo(user["id"], open("assets/swamp/Swamp.png", "rb"), caption = "Вы вошли на болото. Здесь вы можете обменять Ирине Николаевне пойманых вами организмов с помощью 'продажа', а так же ловить эти организмы, утопившись в болоте с помощью 'топиться' ", reply_markup=but)
-realtime = time.localtime() 
-current_time = time.strftime("%H:%M:%S", realtime)
-if current_time=="24:00:00":
-    location["usersData"][user["id"]]["catching"]=0
+
 def leave(bot, user, all_users, location):
     pass
 
@@ -116,6 +119,9 @@ def message(bot, message, user, all_users, location):
             bot.send_message(user["id"], "Вы перестали тонуть в болоте", reply_markup=but)
         else:
             bot.send_message(user["id"], "Вы еще не тонете", reply_markup=but)
+    elif message.text == "вылезти":
+        if user["action"] == "stay":
+            helpers.move_player(bot, user, "choice")
     else:
         bot.send_message(user["id"], "Вы на болоте", reply_markup=but)
 
