@@ -17,9 +17,16 @@ def process_message(message):
             restart(message)
         else:
             if message.text == "/locations":
-                bot.send_message(user["id"], "/" + '\n/'.join(locations.keys()))
+                bot.send_message(user["id"], "/" +
+                                 '\n/'.join(locations.keys()))
             elif message.text == "/stats":
                 give_stats(user, bot)
+            elif message.text.startswith("/name"):
+                user['inventory'][user['inventory'].index(
+                    f'badge - {user["name"]}')] = 'badge - ' + message.text[6:]
+                user['name'] = message.text[6:]
+                bot.send_message(user["id"], "Вы сменили имя." +
+                                 "\n" + "Ваше имя : " + user['name'] + ".")
             elif message.text.startswith("/") and message.text.strip('/') in locations:
                 move_player(bot, user, message.text.strip('/'))
             else:
@@ -27,7 +34,7 @@ def process_message(message):
                 all_users = get_neighbours(user)
 
                 module.message(bot, message, user, all_users,
-                            locations[user['location']])
+                               locations[user['location']])
 
     save_data()
 
