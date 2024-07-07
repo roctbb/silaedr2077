@@ -73,7 +73,6 @@ def climb(bot, user):
         user1[user["id"]]["action"] = "tree"
         bm = bm_create(bot, user1, user)
         bot.send_message(user["id"], "Вы забрались на дерево.", reply_markup=bm)
-        print(2)
 
         if random.randint(3, 7) == 5:
             user1[user["id"]]["action"] = "stay"
@@ -94,7 +93,7 @@ def climb(bot, user):
             bot.send_message(user["id"],
                              "Пока вы взбирались на дерево, вы наступили не на ту ветку и упали. Теперь вы гамаете на земле", reply_markup=bm)
             user["fun"] -= 10
-
+            user["health"] -= 2
             if user["fun"] < 0:
                 user["fun"] = 0
     elif user1[user["id"]]["action"] == "tree" or user1[user["id"]]["action"] == "play on tree":
@@ -116,9 +115,8 @@ def play(bot, user):
             if random.randint(2, 7) == 5:
                 user1[user["id"]]["action"] = "play"
                 bm = bm_create(bot, user1, user)
-                bot.send_message(user["id"],
-                                 "Пока вы доставали телефон, вы не удержали равновесие и упали. Теперь вы гамаете возле дерева.",
-                                 reply_markup=bm)
+                bot.send_message(user["id"],"Пока вы доставали телефон, вы не удержали равновесие и упали. Теперь вы гамаете возле дерева.",reply_markup=bm)
+                user["health"] -= 2
                 user["fun"] -= 30
 
                 if user["fun"] < 0:
@@ -133,12 +131,13 @@ def play(bot, user):
                 if random.randint(0, 100) < user["reputation"]:
                     bm = bm_create(bot, user1, user)
                     bot.send_message(user["id"],
-                                     "Вас спалила Ирина Николаевна за наглым гаманием, но пащадила и не забрала бейджик",
+                                     "Вас спалила Ирина Николаевна за наглым гаманием, но пащадила и не отрезала уголок",
                                      reply_markup=bm)
                 else:
                     bm = bm_create(bot, user1, user)
-                    bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием и збрала бейджик",
+                    bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием и отрезала уголок",
                                      reply_markup=bm)
+                    user["corners"]+=1
                 user["fun"] -= 50
                 if user["fun"] < 0:
                     user["fun"] = 0
