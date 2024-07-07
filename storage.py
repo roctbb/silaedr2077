@@ -37,18 +37,6 @@ except:
         "sport_ground": {
             "players": []
         },
-        "choice": {
-            "usersData": {}
-        },
-        "eatery": {
-            "usersData": {}
-        },
-        "sport_ground": {
-            "usersData": {}
-        },
-        "sport_ground": {
-            "players": []
-        },
         'first_aid_station': {
             "usersData": {}
         }

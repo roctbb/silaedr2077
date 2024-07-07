@@ -17,7 +17,7 @@ def message(bot, message, user, all_users, location=None):
         msg = bot.send_message(user['id'], "Что вы хотите крикнуть?")
         bot.register_next_step_handler(msg, shouter)
     if message.text.startswith("Прыгнуть"):
-        jump(bot, user)
+        jump(bot, user, message)
 
 def events(bot, all_users, location):
     pass
@@ -30,9 +30,10 @@ def shout(bot, message):
         if user["location"] != "basement":
             bot.send_message(user["id"], message)
 
-def jump(bot, user):
+def jump(bot, user, message):
     bot.send_photo(user["id"], open("assets/balcony/backrooms/base.jpg", 'rb'), caption="Вы спрыгнули с балкона и провалились в backrooms...")
-    helpers.move_player(bot, user, "first_aid_station")
+    bot.send_message(user["id"], "Вы даже не успели встать, как к вам подошёл Федя с дубинкой и...")
+    user["health"] = 0
 
 def reset(user, location):
     pass
