@@ -29,22 +29,7 @@ def events(bot, all_users, location=None):
             bot.send_message(user["id"], "Вы восстановили 10 здоровья ❤️‍🩹" +
                              '\n' + f"Ваше здоровье: {user['health']}/{user['max_health']}")
 
-
-def heal(bot, user, location):
-    if (location == 'first_aid_station'):
-        time.sleep(1)
-        location["usersData"][user["id"]]["wait"] = False
-        user['health'] = user['max_health']
-        bot.send_message(user["id"], "Вы восстановили здоровье ❤️‍🩹" +
-                         '\n' + "Ваше здоровье: " + str(user['max_health']))
-
-    else:
-        bot.send_message(user["id"], "Вы не в медпункте")
-
-
 def message(bot, message, user, all_users, location):
-    # if message.text == "лечиться":
-    #    heal(bot, user, user['location'])
     if message.text == "Выйти":
         helpers.move_player(bot, user, "choice")
 
