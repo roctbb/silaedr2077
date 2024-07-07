@@ -13,7 +13,7 @@ def process_message(message):
         move_player(bot, users[str(message.from_user.id)], "choice")
     else:
         user = users[str(message.from_user.id)]
-        if user["corners"] == 0:
+        if user["corners"] == 0 or user["health"] == 0:
             restart(message)
         else:
             if message.text == "/locations":
