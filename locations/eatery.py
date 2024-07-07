@@ -40,7 +40,7 @@ def message(bot, message, user, all_users, location):
                 if rng > 100-user["food"]:
                     rng = 100-user["food"]
                 user["food"] += rng
-                bot.send_message(user["id"], f"Вы поели\n+{rng}🍗")
+                bot.send_message(user["id"], f"Вы поели\n+{rng}🍟")
             else:
                 bot.send_message(user["id"], "Вы не хотите есть")
         elif message.text == "Попить":
@@ -49,7 +49,7 @@ def message(bot, message, user, all_users, location):
                 if rng > 100-user["water"]:
                     rng = 100-user["water"]
                 user["water"] += rng
-                bot.send_message(user["id"], f"Вы попили\n+{rng}💦")
+                bot.send_message(user["id"], f"Вы попили\n+{rng}💧")
             else:
                 bot.send_message(user["id"], "Вы не хотите пить")
         elif message.text == "Украсть печеньку":

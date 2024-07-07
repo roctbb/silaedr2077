@@ -1,4 +1,4 @@
-from storage import *
+from modules import *
 from helpers import *
 import time
 from threading import Thread
@@ -7,7 +7,11 @@ bot = get_bot()
 
 
 def start():
-    import silaedr2077
+    while True:
+        try:
+            import silaedr2077
+        except Exception as e:
+            print(e)
 
 
 t = Thread(target=start, args=())
@@ -15,13 +19,10 @@ t.daemon = True
 t.start()
 
 while True:
-    for location in locations.keys():
+    for key in available_modules.keys():
+        module = available_modules[key]
         all_users = list(
-            filter(lambda x: x["location"] == location, users.values()))
-        # print(all_users, '                 ', locations[location])
-        if len(all_users) > 0:
-            print(1)
-            module = get_module(all_users[0])
-            module.events(bot, all_users, locations[location])
+            filter(lambda x: x["location"] == key, users.values()))
+        module.events(bot, all_users, locations[key])
 
-    time.sleep(30)
+    time.sleep(300)

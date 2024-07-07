@@ -193,7 +193,7 @@ def message(bot, message, user, all_users, location=None):
                         if flag:
                             bot.send_message(user["id"], "Такого предмета нет на рынке(возможно его уже кто-то купил)")
                         else:
-                            if [i[0], i[1]] in location["StoreOffers"][key1]:
+                            if ins in location["StoreOffers"][key1]:
                                 location["StoreOffers"][key1].remove(ins)
                                 users[user["id"]]["inventory"].append(ins[0])
                                 bot.send_message(user["id"], fr"Ты успешно снял предмет с продажи", reply_markup=shopmarkup)
