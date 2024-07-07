@@ -6,31 +6,38 @@ but = helpers.create_keyboard(buttons, rowsWidth=2)
 def enter(bot, user, all_users, location):
     if user["id"] not in list(location["usersData"].keys()):
         location["usersData"][user["id"]] = {
-            "wait": False
+            "wait": False, 
+            "enters" : 0,
+            "catching": 0
         }
+    else:
+        location["usersData"][user["id"]]["enters"] += 1
 
     bot.send_photo(user["id"], open("assets/swamp/Swamp.png", "rb"), caption = "Вы вошли на болото. Здесь вы можете обменять Ирине Николаевне пойманых вами организмов с помощью 'продажа', а так же ловить эти организмы, утопившись в болоте с помощью 'топиться' ", reply_markup=but)
-
+realtime = time.localtime() 
+current_time = time.strftime("%H:%M:%S", realtime)
+if current_time=="24:00:00":
+    location["usersData"][user["id"]]["catching"]=0
 def leave(bot, user, all_users, location):
     pass
 
 catches = [ {   "name": "stonefly",
                 "runame": "веснянка",
-                "propobilyty": 20,
+                "propobilyty": 70,
                 "cost": 14,
                 "rep": 8,
                 "fun": 5
             },{
                 "name": "frog",
                 "runame": "лягушка",
-                "propobilyty": 30,
+                "propobilyty": 50,
                 "cost": 10,
                 "rep": 3,
                 "fun": 7
             },{
                 "name": "leech",
                 "runame": "пиявка",
-                "propobilyty": 10,
+                "propobilyty": 40,
                 "cost": 12,
                 "rep": 4,
                 "fun": 1
@@ -46,7 +53,7 @@ catches = [ {   "name": "stonefly",
                 "runame": "КЛАД",
                 "propobilyty": 2,
                 "cost": 500,
-                "rep": 2,
+                "rep": 10,
                 "fun": 1
             }]
 def message(bot, message, user, all_users, location):
@@ -56,17 +63,22 @@ def message(bot, message, user, all_users, location):
     elif message.text == "ловить":
         if user["action"] == "drowning":
             if not location["usersData"][user["id"]]["wait"]:
-                location["usersData"][user["id"]]["wait"] = True
-                bot.send_message(user["id"], "Вы начинаете ловить кого то в болоте.", reply_markup=but)
-                catch=random.choice(catches)
-                if catch["propobilyty"] >= random.randint(0,100):
-                    st="Вы поймали нечто! И это - "+catch["runame"]+". Ecли вы хотите вылезти из болота, пропишите 'вылезти'"
-                    bot.send_message(user["id"], st, reply_markup=but)
-                    user["inventory"].append(catch["name"])
+                if location["usersData"][user["id"]]["cathcing"]>=10:
+                    location["usersData"][user["id"]]["wait"] = True
+                    bot.send_message(user["id"], "Вы начинаете ловить кого то в болоте.", reply_markup=but)
+                    catch=random.choice(catches)
+                    location["usersData"][user["id"]]["catching"] +=1
+                    if catch["propobilyty"] >= random.randint(0,100):
+                        st="Вы поймали нечто! И это - "+catch["runame"]+". Ecли вы хотите вылезти из болота, пропишите 'вылезти'"
+
+                        bot.send_message(user["id"], st, reply_markup=but)
+                        user["inventory"].append(catch["name"])
+                    else:
+                        bot.send_message(user["id"], "Вам не удалось ничего поймать. Можете попробовать снова, или вылезти из болота 'вылезти'", reply_markup=but)
+                    time.sleep(10)
+                    location["usersData"][user["id"]]["wait"] = False
                 else:
-                    bot.send_message(user["id"], "Вам не удалось ничего поймать. Можете попробовать снова, или вылезти из болота 'вылезти'", reply_markup=but)
-                time.sleep(10)
-                location["usersData"][user["id"]]["wait"] = False
+                    bot.send_message(user["id"], "Нельзя ловить на болоте больше 10 раз за день! Вы так замерзните!", reply_markup=but)
             else:
                 if random.randint(0, 5) == 0:
                     bot.send_message(user["id"], "Ловить живность можно раз в 10 секунд", reply_markup=but)

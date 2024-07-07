@@ -192,5 +192,6 @@ def down(bot, user):
 
 
 def reset(user, location):
+    # del user1[user["id"]]
     pass
     # del user1[user["id"]]

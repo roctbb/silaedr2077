@@ -42,7 +42,7 @@ def process_message(message):
         bot.register_next_step_handler(msg, set_name)
     else:
         user = users[str(message.from_user.id)]
-        if user["corners"] == 0:
+        if user["corners"] == 0 or user["health"] == 0:
             restart(message)
         else:
             if message.text == "/locations":
