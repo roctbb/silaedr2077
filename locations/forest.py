@@ -24,6 +24,7 @@ def enter(bot, user, all_users, location):
         user1[user["id"]] = {"action": "stay"}
     bm = bm_create(bot, user1, user)
     bot.send_message(user["id"], 'Вы зашли в лес', reply_markup=bm)
+    user1[user["id"]] = {"action": "stay"}
     bm.keyboard = []
 
 
