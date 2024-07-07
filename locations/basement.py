@@ -97,7 +97,6 @@ def checkAttacker(bot, message, user, all_users, location=None):
             bot.send_message(user["id"], f"Ты попал!\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
             bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Тебе забили\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
-#-------------------------------------------------------------------------------------------
 def message(bot, message, user, all_users, location=None):
     
     if user["location"] == "basement":
@@ -380,6 +379,7 @@ def message(bot, message, user, all_users, location=None):
 
 def events(bot, all_users, location=None):
     pass
+
     #for i in all_users:
     #    bot.send_message(i["id"], "Ивент!!")
 
