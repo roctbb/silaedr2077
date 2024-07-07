@@ -4,6 +4,7 @@ from helpers import *
 
 bot = get_bot()
 
+
 @bot.message_handler(content_types=['text'])
 def process_message(message):
     print(message.from_user.first_name + " >> " + message.text)
@@ -22,8 +23,10 @@ def process_message(message):
         module = get_module(user)
         all_users = get_neighbours(user)
 
-        module.message(bot, message, user, all_users, locations[user['location']])
+        module.message(bot, message, user, all_users,
+                       locations[user['location']])
 
     save_data()
+
 
 bot.polling(none_stop=True)
