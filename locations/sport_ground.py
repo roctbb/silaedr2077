@@ -13,17 +13,7 @@ def enter(bot, user, all_users, location):
         bot.send_photo(user["id"], open("assets/sport_ground/sport_ground.jpg", "rb"), caption="Приветствуем на спорт площадке!\n Сейчас здесь находится"+str({len(all_users)})+"людей.", reply_markup=basemarkup)  
     else:        
         bot.send_photo(user["id"], open("assets/sport_ground/sport_ground.jpg", "rb"), caption="С возвращением\nИгроков: "+str({len(all_users)})+", удачной игры!", reply_markup=basemarkup)
-    location["locations"][user["id"]] = {
-        "penaltyGameConnection": None, 
-        "stage": 0, 
-        "defChoice": [], 
-        "attackChoice": 0, 
-        "turn": -1, 
-        "score": [0, 0],
-        "wait": False, 
-        "buyItem": [], 
-        "sellItem": []
-    }
+
 def leave(bot, user, all_users, location):
     pass
 
