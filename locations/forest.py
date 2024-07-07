@@ -1,7 +1,6 @@
 import random
 from telebot import types
-
-from helpers import create_keyboard
+import helpers
 user1 = {}
 
 DEFAULT_BUTTONS = []
@@ -57,11 +56,11 @@ def bm_create(bot, user1, user):
     item2 = "Залезть на дерево"
     item3 = "Перестать гамать"
     item4 = "Спуститься вниз"
-    if user1[user["id"]]["action"] == "play":
+    if user1[user["id"]]["action"] == "play" or user1[user["id"]]["action"] == "play on tree":
         item1 = ''
     if user1[user["id"]]["action"] == "tree" or user1[user["id"]]["action"] == "play on tree":
         item2 = ''
-    if user1[user["id"]]["action"] != "play":
+    if user1[user["id"]]["action"] != "play" and user1[user["id"]]["action"] != "play on tree":
         item3 = ''
     if user1[user["id"]]["action"] != "tree" and user1[user["id"]]["action"] != "play on tree":
         item4 = ''
