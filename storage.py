@@ -18,7 +18,8 @@ except:
         "basement": {
             "usersData": {},
             "StoreOffers": {
-                #OffererId: [itemName, costValue(cookies)]
+                #OffererId: [[itemName, costValue(cookies)], ...]
+                "-1" : []
             }
         },
         "forest": {

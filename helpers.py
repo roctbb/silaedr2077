@@ -95,3 +95,13 @@ def give_stats(user, bot):
 def save_data():
     with open('save.json', 'w', encoding='utf-8') as f:
         json.dump([users, locations], f, ensure_ascii=False, indent=4)
+
+def restart(message):
+    add_user(message)
+    user = users[str(message.from_user.id)]
+    if user["id"] in locations["basement"]["StoreOffers"]:
+        for i in locations["basement"]["StoreOffers"][user["id"]]:
+            locations["basement"]["StoreOffers"]["-1"].append(i)
+        locations["basement"]["StoreOffers"][user["id"]] = []
+    move_player(bot, user, "choice")
+    bot.send_message(user["id"], "Ты потерял все уголки\nПридется начать все заного")

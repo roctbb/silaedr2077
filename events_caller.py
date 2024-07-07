@@ -9,8 +9,7 @@ def start():
     while True:
         try:
             import silaedr2077
-        except:
-            pass
+        except Exception as e: print(e)
 
 t = Thread(target=start, args=( ))
 t.daemon = True
