@@ -23,7 +23,7 @@ def leave(bot, user, all_users, location=None):
 
 def events(bot, all_users, location=None):
     for i in all_users:
-        print(i[id])
+        print(i["id"])
     # user[]['health'] = user['max_health']
     # bot.send_message(user["id"], "Вы восстановили здоровье ❤️‍🩹" +
     #                 '\n' + "Ваше здоровье: " + str(user['max_health']))
