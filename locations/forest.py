@@ -137,7 +137,9 @@ def play(bot, user):
                     bm = bm_create(bot, user1, user)
                     bot.send_message(user["id"], "Вас спалила Ирина Николаевна за наглым гаманием и отрезала уголок",
                                      reply_markup=bm)
-                    user["corners"]+=1
+                    user["corners"]-=1
+                    if user["corners"]==0:
+                        reset(user)
                 user["fun"] -= 50
                 if user["fun"] < 0:
                     user["fun"] = 0
@@ -173,12 +175,11 @@ def down(bot, user):
             bm = bm_create(bot, user1, user)
             bot.send_message(user["id"], "Вы продолжили гамать на земле", reply_markup=bm)
     else:
-<<<<<<< HEAD
         bm = bm_create(bot, user1, user)
         bot.send_message(user["id"], "Вы не на дереве!", reply_markup=bm)
-=======
         bot.send_message(user["id"], "Вы не на дереве!")
 
-def reset(user, location):
+def reset(user):
+    del user1[user["id"]]
+
     pass
->>>>>>> origin/main
