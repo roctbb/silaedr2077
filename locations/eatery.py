@@ -84,3 +84,6 @@ def events(bot, all_users, location):
             bot.send_message(users[i]["id"], "Не забывайти пить воду, у вас меньше 10%")
         if users[i]["food"] < 10:
             bot.send_message(users[i]["id"], "Не забывайти есть, у вас меньше 10%")
+
+def reset(user, location):
+    pass

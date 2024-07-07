@@ -97,11 +97,12 @@ def save_data():
         json.dump([users, locations], f, ensure_ascii=False, indent=4)
 
 def restart(message):
+    from modules import available_modules
+    user = users[str(message.from_user.id)]
+    for i in locations.keys():
+        module = available_modules[i]
+        module.reset(user, locations[i])
     add_user(message)
     user = users[str(message.from_user.id)]
-    if user["id"] in locations["basement"]["StoreOffers"]:
-        for i in locations["basement"]["StoreOffers"][user["id"]]:
-            locations["basement"]["StoreOffers"]["-1"].append(i)
-        locations["basement"]["StoreOffers"][user["id"]] = []
     move_player(bot, user, "choice")
     bot.send_message(user["id"], "Ты потерял все уголки\nПридется начать все заного")

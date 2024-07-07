@@ -110,3 +110,6 @@ def down(bot, user):
             bot.send_message(user["id"], "Вы продолжили гамать на земле")
     else:
         bot.send_message(user["id"], "Вы не на дереве!")
+
+def reset(user, location):
+    pass

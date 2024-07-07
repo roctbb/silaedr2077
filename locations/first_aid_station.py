@@ -37,3 +37,6 @@ def message(bot, message, user, all_users, location):
 
 def events(bot, all_users, location=None):
     pass
+
+def reset(user, location):
+    pass
