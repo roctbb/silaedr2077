@@ -4,13 +4,42 @@ from helpers import *
 
 bot = get_bot()
 
+basemarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+it1 = types.KeyboardButton("Да")
+it2 = types.KeyboardButton("Нет")
+basemarkup.add(it1, it2)
+
+
+def test_name(message):
+    if message.text == "Да":
+        user = users[str(message.from_user.id)]
+        bot.send_message(user["id"], f"Ваше имя: {user['name']}.")
+        move_player(bot, users[str(message.from_user.id)], "choice")
+    else:
+        msg = bot.send_message(user["id"], f"Введите имя.")
+        bot.register_next_step_handler(msg, set_name)
+
+
+def set_name(message):
+    user = users[str(message.from_user.id)]
+    names = [i for i in users['name']]
+    if message.text not in names:
+        user['name'] = message.text
+        msg2 = bot.send_message(
+            user["id"], f"Ваше имя: {user['name']}.", reply_markup=basemarkup)
+        bot.register_next_step_handler(msg2, test_name)
+    else:
+        msg = bot.send_message(user["id"], "Имя занято.\nВведите имя.")
+        bot.register_next_step_handler(msg, set_name)
+
 
 @bot.message_handler(content_types=['text'])
 def process_message(message):
     print(message.from_user.first_name + " >> " + message.text)
     if not is_registered(message):
         add_user(message)
-        move_player(bot, users[str(message.from_user.id)], "choice")
+        msg = bot.send_message(user["id"], f"Введите имя.")
+        bot.register_next_step_handler(msg, set_name)
     else:
         user = users[str(message.from_user.id)]
         if user["corners"] == 0 or user["health"] == 0:
