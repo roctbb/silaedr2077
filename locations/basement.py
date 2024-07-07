@@ -382,3 +382,9 @@ def events(bot, all_users, location=None):
     pass
     #for i in all_users:
     #    bot.send_message(i["id"], "Ивент!!")
+
+def reset(user, location):
+    if user["id"] in location["StoreOffers"]:
+        for i in location["StoreOffers"][user["id"]]:
+            location["StoreOffers"]["-1"].append(i)
+        location["StoreOffers"][user["id"]] = []

@@ -33,8 +33,8 @@ def add_user(message):
         "cookies": random.randint(10, 60),
         "food": random.randint(50, 100),
         "water": random.randint(50, 100),
-        "health": 20,
-        "max_health": random.randint(20, 30),
+        "health": 85,
+        "max_health": 85,
         "corners": 4,
         "knowledge": 0,
         "reputation": random.randint(30, 80),
@@ -95,3 +95,14 @@ def give_stats(user, bot):
 def save_data():
     with open('save.json', 'w', encoding='utf-8') as f:
         json.dump([users, locations], f, ensure_ascii=False, indent=4)
+
+def restart(message):
+    from modules import available_modules
+    user = users[str(message.from_user.id)]
+    for i in locations.keys():
+        module = available_modules[i]
+        module.reset(user, locations[i])
+    add_user(message)
+    user = users[str(message.from_user.id)]
+    move_player(bot, user, "choice")
+    bot.send_message(user["id"], "Ты потерял все уголки\nПридется начать все заного")

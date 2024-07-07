@@ -23,7 +23,7 @@ def events(bot, all_users, location):
     pass
 
 def shouter(message):
-    shout(helpers.get_bot(), message.text)
+    shout(helpers.get_bot(), "Кто-то крикнул:\n" + message.text)
 
 def shout(bot, message):
     for user in helpers.get_all_users():
@@ -33,3 +33,6 @@ def shout(bot, message):
 def jump(bot, user):
     bot.send_photo(user["id"], open("assets/balcony/backrooms/base.jpg", 'rb'), caption="Вы спрыгнули с балкона и провалились в backrooms...")
     helpers.move_player(bot, user, "first_aid_station")
+
+def reset(user, location):
+    pass
