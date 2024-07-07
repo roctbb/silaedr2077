@@ -40,3 +40,6 @@ def message(bot, message, user, all_users, location):
             bot.send_message(user["id"], "Ни гатова(")
 def events(bot, all_users, location):
     pass
+
+def reset(user, location):
+    pass

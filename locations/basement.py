@@ -7,13 +7,13 @@ from telebot import types
 
 basemarkup = helpers.create_keyboard([["Магазин", "Пинг-понг", "Выйти"]])
 
-exitmarkup = helpers.create_keyboard([["Выйти"]])
+exitmarkup = helpers.create_keyboard([["Bыйти"]])
 
 choicemarkup = helpers.create_keyboard([["Да", "Нет"]])
 
 tennisgamemarkup = helpers.create_keyboard([["Слева", "Спереди", "Справа"]])
 
-shopmarkup = helpers.create_keyboard([["Купить", "Продать"], ["Выйти"]])
+shopmarkup = helpers.create_keyboard([["Купить", "Продать"], ["Bыйти"]])
 
 def enter(bot, user, all_users, location):
     if user["id"] not in location["usersData"]:
@@ -36,6 +36,12 @@ def enter(bot, user, all_users, location):
 
 
 def leave(bot, user, all_users, location=None):
+    if location["usersData"][user["id"]]["playtennisConnection"] != None:
+        bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], "Твой противник резко вышел из подвала", reply_markup=basemarkup)
+        location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 0
+        location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["score"] = [0, 0]
+        location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["shieldChoice"] = []
+        location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["playtennisConnection"] = None
     bot.send_photo(user["id"], open("assets/basement/exit.jpg", "rb"), caption="Ты вышел из подвала :(")
 
 def checkShielder(bot, message, user, all_users, location):
@@ -98,28 +104,28 @@ def message(bot, message, user, all_users, location=None):
             location["usersData"][user["id"]]["wait"] = True
             # shop sell cost
             if location["usersData"][user["id"]]["stage"] == 10:
-                if message.text == "Выйти":
-                    bot.send_message(user["id"], "Ты вышел из магазина", reply_markup=basemarkup)
-                    location["usersData"][user["id"]]["stage"] = 0
+                if message.text == "Bыйти":
+                    location["usersData"][user["id"]]["stage"] = 8
+                    bot.send_message(user["id"], "Ты вернулся назад", reply_markup=helpers.create_keyboard([["Назад"], user["inventory"]]))
                 else:
                     if message.text.isdigit():
                         if user["id"] in list(location["StoreOffers"].keys()):
                             location["StoreOffers"][user["id"]].append([location["usersData"][user["id"]]["sellItem"], int(message.text)])
-                            bot.send_message(user["id"], "Твой предмет добавлен в магазин", reply_markup=basemarkup)
                             location["usersData"][user["id"]]["stage"] = 0
+                            bot.send_message(user["id"], "Твой предмет добавлен в магазин", reply_markup=basemarkup)
                             users[user["id"]]["inventory"].remove(location["usersData"][user["id"]]["sellItem"])
                         else:
                             location["StoreOffers"][user["id"]] = [[location["usersData"][user["id"]]["sellItem"], int(message.text)]]
-                            bot.send_message(user["id"], "Твой предмет добавлен в магазин", reply_markup=basemarkup)
                             location["usersData"][user["id"]]["stage"] = 0
+                            bot.send_message(user["id"], "Твой предмет добавлен в магазин", reply_markup=basemarkup)
                             users[user["id"]]["inventory"].remove(location["usersData"][user["id"]]["sellItem"])
                     else:
                         bot.send_message(user["id"], "Напиши целое положительно число")
             # shop buy confirmation
             elif location["usersData"][user["id"]]["stage"] == 9:
                 if message.text == "Нет":
-                    bot.send_message(user["id"], "Ты вышел из магазина", reply_markup=basemarkup)
                     location["usersData"][user["id"]]["stage"] = 0
+                    bot.send_message(user["id"], "Ты вышел из магазина", reply_markup=basemarkup)
                 if message.text == "Да":
                     flag = True
                     for key in location["StoreOffers"].keys():
@@ -144,9 +150,9 @@ def message(bot, message, user, all_users, location=None):
 
             # shop sell choice
             elif location["usersData"][user["id"]]["stage"] == 8:
-                if message.text == "Выйти":
-                    bot.send_message(user["id"], "Ты вышел из магазина", reply_markup=basemarkup)
-                    location["usersData"][user["id"]]["stage"] = 0
+                if message.text == "Назад":
+                    bot.send_message(user["id"], "Ты вернулся назад", reply_markup=shopmarkup)
+                    location["usersData"][user["id"]]["stage"] = 6
                 else:
                     if message.text in user["inventory"]:
                         flag = False
@@ -156,9 +162,9 @@ def message(bot, message, user, all_users, location=None):
                             location["usersData"][user["id"]]["sellItem"] = message.text
             # shop buy choice
             elif location["usersData"][user["id"]]["stage"] == 7:
-                if message.text == "Выйти":
-                    bot.send_message(user["id"], "Ты вышел из магазина", reply_markup=basemarkup)
-                    location["usersData"][user["id"]]["stage"] = 0
+                if message.text == "Назад":
+                    bot.send_message(user["id"], "Ты вернулся назад", reply_markup=shopmarkup)
+                    location["usersData"][user["id"]]["stage"] = 6
                 else:
                     flag = True
                     for key in location["StoreOffers"].keys():
@@ -176,39 +182,58 @@ def message(bot, message, user, all_users, location=None):
                                     bot.send_message(user["id"], "У вас недостаточно печенек🍪 :(", reply_markup=basemarkup)
                                     location["usersData"][user["id"]]["stage"] = 0
                     if flag:
-                        bot.send_message(user["id"], "Такого предмета нет на рынке(возможно его уже кто-то купил)")
+                        for key in location["StoreOffers"].keys():
+                            for i in location["StoreOffers"][key]:
+                                if message.text == "Снять с продажи " + i[0] and key == user["id"]:
+                                    flag = False
+                                    key1 = key
+                                    ins = [i[0], i[1]]
+                        
+                        if flag:
+                            bot.send_message(user["id"], "Такого предмета нет на рынке(возможно его уже кто-то купил)")
+                        else:
+                            if ins in location["StoreOffers"][key1]:
+                                location["StoreOffers"][key1].remove(ins)
+                                users[user["id"]]["inventory"].append(ins[0])
+                                bot.send_message(user["id"], fr"Ты успешно снял предмет с продажи", reply_markup=shopmarkup)
+                                location["usersData"][user["id"]]["stage"] = 6
+                            else:
+                                bot.send_message(user["id"], "Такого предмета нет на рынке(возможно его уже кто-то купил)")
             #shop base
             elif location["usersData"][user["id"]]["stage"] == 6:
-                if message.text == "Выйти":
+                if message.text == "Bыйти":
                     bot.send_message(user["id"], "Ты вышел из магазина", reply_markup=basemarkup)
                     location["usersData"][user["id"]]["stage"] = 0
                 elif message.text == "Купить":
                     if len(list(location["StoreOffers"].keys())) == 0:
                         n = []
-                        buymarkup = helpers.create_keyboard(["Выйти"])
+                        buymarkup = helpers.create_keyboard(["Назад"])
                         bot.send_message(user["id"], "В магазине ничего не продается\nТы можешь выставить что-то первым!", reply_markup=buymarkup)
                         location["usersData"][user["id"]]["stage"] = 7
                     else:
                         n = []
                         for key in location["StoreOffers"].keys():
                             for i in location["StoreOffers"][key]:
-                                n.append(i[0] + " " + str(i[1]) + "🍪")
-                        buymarkup = helpers.create_keyboard([["Выйти"], n], rowsWidth=2)
+                                if key != user["id"]:
+                                    n.append(i[0] + " " + str(i[1]) + "🍪")
+                                else:
+                                    n.append("Снять с продажи " + i[0])
+                        buymarkup = helpers.create_keyboard([["Назад"], n], rowsWidth=2)
                         bot.send_message(user["id"], "Выберите предложение", reply_markup=buymarkup)
                         location["usersData"][user["id"]]["stage"] = 7
                 elif message.text == "Продать":
                     if len(user["inventory"]) == 0:
-                        sellmarkup = helpers.create_keyboard(["Выйти"])
+                        sellmarkup = helpers.create_keyboard(["Назад"])
                         bot.send_message(user["id"], "У тебя нет вещей :(", reply_markup=sellmarkup)
                         location["usersData"][user["id"]]["stage"] = 8               
                     else:
-                        sellmarkup = helpers.create_keyboard([["Выйти"], user["inventory"]])
+                        sellmarkup = helpers.create_keyboard([["Назад"], user["inventory"]])
                         bot.send_message(user["id"], "Выбери что выставить на продажу", reply_markup=sellmarkup)
                         location["usersData"][user["id"]]["stage"] = 8
             # pingpongMainGame
             # waiting 
             elif location["usersData"][user["id"]]["stage"] == 5:
-                if message.text == "Выйти":
+                if message.text == "Bыйти":
                     location["usersData"][user["id"]]["stage"] = 0
                     location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 0
                     location["usersData"][user["id"]]["score"] = [0, 0]
@@ -233,7 +258,7 @@ def message(bot, message, user, all_users, location=None):
                     elif message.text == "Справа":
                         location["usersData"][user["id"]]["shieldChoice"].append(2)
                     if len(location["usersData"][user["id"]]["shieldChoice"]) == 2:
-                        if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] == 4:
+                        if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] != 5:
                             bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты сделал выбор, ожидай противника...", reply_markup=exitmarkup)
                             location["usersData"][user["id"]]["stage"] = 5
                             location["usersData"][user["id"]]["turn"] *= -1
@@ -250,7 +275,7 @@ def message(bot, message, user, all_users, location=None):
                     elif message.text == "Справа":
                         location["usersData"][user["id"]]["attackChoice"] = 2
                     
-                    if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] == 4:
+                    if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] != 5:
                             bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты сделал выбор, ожидай противника...", reply_markup=exitmarkup)
                             location["usersData"][user["id"]]["stage"] = 5
                             location["usersData"][user["id"]]["turn"] *= -1
@@ -261,7 +286,7 @@ def message(bot, message, user, all_users, location=None):
 
             # cansel if u are tennis host + waiting for opponent to confirm -----------------------------
             elif location["usersData"][user["id"]]["stage"] == 3:
-                if message.text == "Выйти":
+                if message.text == "Bыйти":
                     location["usersData"][user["id"]]["stage"] = 0
                     bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Вы вышли в главное меню", reply_markup=basemarkup)
                     location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 0
@@ -354,3 +379,12 @@ def message(bot, message, user, all_users, location=None):
 
 def events(bot, all_users, location=None):
     pass
+
+    #for i in all_users:
+    #    bot.send_message(i["id"], "Ивент!!")
+
+def reset(user, location):
+    if user["id"] in location["StoreOffers"]:
+        for i in location["StoreOffers"][user["id"]]:
+            location["StoreOffers"]["-1"].append(i)
+        location["StoreOffers"][user["id"]] = []
