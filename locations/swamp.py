@@ -24,35 +24,35 @@ def enter(bot, user, all_users, location):
 def leave(bot, user, all_users, location):
     pass
 
-catches = [ {   "name": "stonefly",
+catches = [ {   "name": "Веснянка",
                 "runame": "веснянка",
                 "propobilyty": 70,
                 "cost": 14,
                 "rep": 8,
                 "fun": 5
             },{
-                "name": "frog",
+                "name": "Лягушка",
                 "runame": "лягушка",
                 "propobilyty": 50,
                 "cost": 10,
                 "rep": 3,
                 "fun": 7
             },{
-                "name": "leech",
+                "name": "Пиявка",
                 "runame": "пиявка",
                 "propobilyty": 40,
                 "cost": 12,
                 "rep": 4,
                 "fun": 1
             },{
-                "name": "snail",
-                "runame": "прудовик",
+                "name": "Улитка",
+                "runame": "улитка",
                 "propobilyty": 70,
                 "cost": 6,
                 "rep": 2,
                 "fun": 1
             },{
-                "name": "TREASURE",
+                "name": "КЛАД",
                 "runame": "КЛАД",
                 "propobilyty": 2,
                 "cost": 500,
@@ -91,7 +91,7 @@ def message(bot, message, user, all_users, location):
         if user["action"] != "drowning":
             
             length_of_sell=0
-            while ("TREASURE" in user["inventory"] or "leech" in user["inventory"] or "snail" in user["inventory"] or "stonefly" in user["inventory"] or "frog" in user["inventory"]) and length_of_sell<1000:
+            while ("КЛАД" in user["inventory"] or "Пиявка" in user["inventory"] or "Улитка" in user["inventory"] or "Веснянка" in user["inventory"] or "Лягушка" in user["inventory"]) and length_of_sell<1000:
                 counter_of_swamp_sell = -1
                 length_of_sell+=1
                 for i in user["inventory"]:

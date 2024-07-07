@@ -52,7 +52,7 @@ def process_message(message):
                 give_stats(user, bot)
             elif message.text.startswith("/name"):
                 user['inventory'][user['inventory'].index(
-                    f'badge - {user["name"]}')] = 'badge - ' + message.text[6:]
+                    f'Бейджик - {user["name"]}')] = 'Бейджик - ' + message.text[6:]
                 user['name'] = message.text[6:]
                 bot.send_message(user["id"], "Вы сменили имя." +
                                  "\n" + "Ваше имя : " + user['name'] + ".")
