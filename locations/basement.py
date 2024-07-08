@@ -135,13 +135,14 @@ def message(bot, message, user, all_users, location=None):
                     if not flag:
                         users[user["id"]]["inventory"].append(location["usersData"][user["id"]]["buyItem"][1])
                         users[user["id"]]["cookies"] -= location["usersData"][user["id"]]["buyItem"][2]
-                        users[location["usersData"][user["id"]]["buyItem"][0]]["cookies"] += location["usersData"][user["id"]]["buyItem"][2]
                         text1 = location["usersData"][user["id"]]["buyItem"][1]
                         text2 = location["usersData"][user["id"]]["buyItem"][2]
                         bot.send_message(user["id"], f"Ты успешно купил {text1} за {text2}🍪", reply_markup=basemarkup)
                         location["usersData"][user["id"]]["stage"] = 0
-                        bot.send_message(location["usersData"][user["id"]]["buyItem"][0], f"У тебя купили {text1} за {text2}🍪")
                         location["StoreOffers"][location["usersData"][user["id"]]["buyItem"][0]].remove([location["usersData"][user["id"]]["buyItem"][1], location["usersData"][user["id"]]["buyItem"][2]])
+                        if location["usersData"][user["id"]]["buyItem"][0] != -1:
+                            users[location["usersData"][user["id"]]["buyItem"][0]]["cookies"] += location["usersData"][user["id"]]["buyItem"][2]
+                            bot.send_message(location["usersData"][user["id"]]["buyItem"][0], f"У тебя купили {text1} за {text2}🍪")
                     else:
                         bot.send_message(user["id"], "Предмет уже кто-то купил :(", reply_markup=basemarkup)
                         location["usersData"][user["id"]]["stage"] = 0
