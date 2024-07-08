@@ -13,7 +13,6 @@ def set_name(message):
             f'Бейджик - ' + user['name'])] = 'Бейджик - ' + message.text
         user['name'] = message.text
         bot.send_message(user["id"], f"Ваше имя: {user['name']}.")
-        bot.send_message(user["id"], "Выберитя куда пойти.")
         move_player(bot, user, 'choice')
     else:
         msg = bot.send_message(user["id"], "Имя занято.\nВведите имя.")
