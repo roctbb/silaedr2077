@@ -4,40 +4,17 @@ from helpers import *
 
 bot = get_bot()
 
-basemarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-it1 = types.KeyboardButton("Да")
-it2 = types.KeyboardButton("Нет")
-basemarkup.add(it1, it2)
-
-
-def test_name(message):
-    if message.text == "Да":
-        name = ""
-        if message.from_user.first_name != None:
-            name += message.from_user.first_name
-        else:
-            name += "Anonim"
-        if message.from_user.last_name != None:
-            name += " "
-            name += message.from_user.last_name
-        user = users[str(message.from_user.id)]
-        user['inventory'][user['inventory'].index(
-            'badge - ' + name)] = 'badge - ' + user['name']
-        bot.send_message(user["id"], f"Ваше имя: {user['name']}.")
-        move_player(bot, users[str(message.from_user.id)], "choice")
-    else:
-        msg = bot.send_message(user["id"], f"Введите имя.")
-        bot.register_next_step_handler(msg, set_name)
-
 
 def set_name(message):
     user = users[str(message.from_user.id)]
     names = [users[i]['name']for i in users.keys()]
     if message.text not in names:
+        user['inventory'][user['inventory'].index(
+            f'Бейджик - ' + user['name'])] = 'Бейджик - ' + message.text
         user['name'] = message.text
-        msg2 = bot.send_message(
-            user["id"], f"Ваше имя: {user['name']}.", reply_markup=basemarkup)
-        bot.register_next_step_handler(msg2, test_name)
+        bot.send_message(user["id"], f"Ваше имя: {user['name']}.")
+        bot.send_message(user["id"], "Выберитя куда пойти.")
+        move_player(bot, user, 'choice')
     else:
         msg = bot.send_message(user["id"], "Имя занято.\nВведите имя.")
         bot.register_next_step_handler(msg, set_name)
