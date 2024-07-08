@@ -53,28 +53,28 @@ def process_message(message):
         bot.register_next_step_handler(msg, set_name)
     else:
         user = users[str(message.from_user.id)]
-        if user["corners"] == 0:
-            restart(message)
+        if message.text == "/locations":
+            bot.send_message(user["id"], "/" +
+                                '\n/'.join(locations.keys()))
+        elif message.text == "/stats":
+            give_stats(user, bot)
+        elif message.text.startswith("/name"):
+            user['inventory'][user['inventory'].index(
+                f'Бейджик - {user["name"]}')] = 'Бейджик - ' + message.text[6:]
+            user['name'] = message.text[6:]
+            bot.send_message(user["id"], "Вы сменили имя." +
+                                "\n" + "Ваше имя : " + user['name'] + ".")
+        elif message.text.startswith("/") and message.text.strip('/') in locations:
+            move_player(bot, user, message.text.strip('/'))
         else:
-            if message.text == "/locations":
-                bot.send_message(user["id"], "/" +
-                                 '\n/'.join(locations.keys()))
-            elif message.text == "/stats":
-                give_stats(user, bot)
-            elif message.text.startswith("/name"):
-                user['inventory'][user['inventory'].index(
-                    f'Бейджик - {user["name"]}')] = 'Бейджик - ' + message.text[6:]
-                user['name'] = message.text[6:]
-                bot.send_message(user["id"], "Вы сменили имя." +
-                                 "\n" + "Ваше имя : " + user['name'] + ".")
-            elif message.text.startswith("/") and message.text.strip('/') in locations:
-                move_player(bot, user, message.text.strip('/'))
-            else:
-                module = get_module(user)
-                all_users = get_neighbours(user)
+            module = get_module(user)
+            all_users = get_neighbours(user)
 
-                module.message(bot, message, user, all_users,
-                               locations[user['location']])
+            module.message(bot, message, user, all_users,
+                            locations[user['location']])
+
+            if user["corners"] == 0 or user["health"] == 0:
+                restart(message)
 
     save_data()
 

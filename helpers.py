@@ -107,4 +107,4 @@ def restart(message):
     user = users[str(message.from_user.id)]
     move_player(bot, user, "choice")
     bot.send_message(
-        user["id"], "Ты потерял все уголки\nПридется начать все заного")
+        user["id"], "Ты потерял все уголки или умер\nПридется начать все заного")
