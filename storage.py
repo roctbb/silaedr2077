@@ -23,7 +23,9 @@ except:
             }
         },
         "forest": {
-            "usersData": {}
+            "usersData": {
+
+            }
         },
         "swamp": {
             "usersData": {}
@@ -32,18 +34,6 @@ except:
             "usersData": {}
         },
         "eatery": {
-            "usersData": {}
-        },
-        "sport_ground": {
-            "players": []
-        },
-        "choice": {
-            "usersData": {}
-        },
-        "eatery": {
-            "usersData": {}
-        },
-        "sport_ground": {
             "usersData": {}
         },
         "sport_ground": {

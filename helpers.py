@@ -39,7 +39,7 @@ def add_user(message):
         "knowledge": 0,
         "reputation": random.randint(30, 80),
         "fun": random.randint(80, 100),
-        "inventory": ["laptop", "phone", "bottle", f"badge - {name}"],
+        "inventory": ["ноутбук", "Телефон", "Бутылка", f"Бейджик - {name}"],
         "location": "room",
         "action": "stay"
     }
@@ -105,4 +105,4 @@ def restart(message):
     add_user(message)
     user = users[str(message.from_user.id)]
     move_player(bot, user, "choice")
-    bot.send_message(user["id"], "Ты потерял все уголки\nПридется начать все заного")
+    bot.send_message(user["id"], "Ты проиграл или умер\nПридется начать все заного")

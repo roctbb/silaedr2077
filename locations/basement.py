@@ -97,7 +97,6 @@ def checkAttacker(bot, message, user, all_users, location=None):
             bot.send_message(user["id"], f"Ты попал!\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
             bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Тебе забили\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
-#-------------------------------------------------------------------------------------------
 def message(bot, message, user, all_users, location=None):
     
     if user["location"] == "basement":
@@ -330,7 +329,7 @@ def message(bot, message, user, all_users, location=None):
                 else:
                     data = []
                     for i in all_users:
-                        if location["usersData"][i["id"]]["stage"] in [0, 1] : data.append(i["name"])
+                        if location["usersData"][i["id"]]["stage"] in [0, 1, 6, 7, 8] : data.append(i["name"])
                     if message.text in data and message.text != user["name"]:
 
                         for i in all_users:
@@ -361,13 +360,13 @@ def message(bot, message, user, all_users, location=None):
                         location["usersData"][user["id"]]["playtennis"] = True
                         markupPlayers = types.ReplyKeyboardMarkup(resize_keyboard=True)
                         for i in all_users:
-                            if i != user:
+                            if i != user and location["usersData"][i["id"]]["stage"] in [0, 1, 6, 7, 8]:
                                 markupPlayers.add(i["name"])
                         markupPlayers.add("Отмена")
                         location["usersData"][user["id"]]["stage"] = 1
                         bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ты можеш сыграть, выбери игрока", reply_markup=markupPlayers)
                     else:
-                        bot.send_message(user["id"], "В подвале никого нет, попробуй позже")
+                        bot.send_message(user["id"], "Ты не можешь ни с кем сыграть в данный момент")
                 elif message.text == "Выйти":
                     helpers.move_player(bot, user, "choice")
             
@@ -380,6 +379,7 @@ def message(bot, message, user, all_users, location=None):
 
 def events(bot, all_users, location=None):
     pass
+
     #for i in all_users:
     #    bot.send_message(i["id"], "Ивент!!")
 
