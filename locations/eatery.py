@@ -20,7 +20,7 @@ def enter(bot, user, all_users, location):
             location["usersData"][user["id"]] = {
                 "stage": 0, 
                 "visits": location["usersData"][user["id"]]["visits"]+1,
-                "lastVisitDate": datetime.today().strftime('%Y-%m-%d')
+                "lastVisitDate": datetime.today().strftime('%YYYY-%MM-%DD')
             }
         if location["usersData"][user["id"]]["visits"] == 4:
             bot.send_message(user["id"], "Ты уже приходил в столовку сегодня 3 раза, приходи завтра")

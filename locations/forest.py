@@ -47,6 +47,8 @@ def message(bot, message, user, all_users, location):
         stop(bot, user, location)
     elif message.text == "Спуститься вниз":
         down(bot, user,location)
+    elif message.text == "Выйти":
+        helpers.move_player(bot, user, "choice")
     else:
         bm = bm_create(bot, location, user)
         bot.send_message(user["id"], "Лес", reply_markup=bm)
@@ -61,6 +63,7 @@ def bm_create(bot, location, user):
     item2 = "Залезть на дерево"
     item3 = "Перестать гамать"
     item4 = "Спуститься вниз"
+    item5 = "Выйти"
     if location["usersData"][user["id"]]["action"] == "play" or location["usersData"][user["id"]]["action"] == "play on tree":
         item1 = ''
     if location["usersData"][user["id"]]["action"] == "tree" or location["usersData"][user["id"]]["action"] == "play on tree":
@@ -69,7 +72,7 @@ def bm_create(bot, location, user):
         item3 = ''
     if location["usersData"][user["id"]]["action"] != "tree" and location["usersData"][user["id"]]["action"] != "play on tree":
         item4 = ''
-    return helpers.create_keyboard([[item1, item2, item3, item4]])
+    return helpers.create_keyboard([[item1, item2, item3, item4, item5]])
 
 
 def climb(bot, user, location):

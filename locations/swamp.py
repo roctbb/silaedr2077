@@ -1,7 +1,7 @@
 import random
 import helpers
 import time
-buttons = [['продажа', 'топиться'], ['вылезти', 'ловить'], ['Выйти']]
+buttons = [['продать', 'Топиться'], ['вылезти', 'Ловить', 'Выйти']]
 but = helpers.create_keyboard(buttons, rowsWidth=2)
 
 
@@ -67,11 +67,11 @@ catches = [{"name": "Веснянка",
 
 
 def message(bot, message, user, all_users, location):
-    if message.text == "топиться":
+    if message.text == "Топиться":
         user["action"] = "drowning"
         bot.send_message(
             user["id"], "Вы начали топиться в болоте. Можете прописать 'ловить', чтобы поймать кого-то, или 'вылезти', чтобы перестать топиться", reply_markup=but)
-    elif message.text == "ловить":
+    elif message.text == "Ловить":
         if user["action"] == "drowning":
             if not location["usersData"][user["id"]]["wait"]:
                 if location["usersData"][user["id"]]["cathcing"] >= 10:
@@ -102,7 +102,7 @@ def message(bot, message, user, all_users, location):
         else:
             bot.send_message(
                 user["id"], "Сначала нужно утопиться", reply_markup=but)
-    elif message.text == "продажа":
+    elif message.text == "продаnm":
         if user["action"] != "drowning":
 
             length_of_sell = 0
