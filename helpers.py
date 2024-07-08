@@ -87,7 +87,7 @@ def get_bot():
 
 def give_stats(user, bot):
     text = ""
-    text += "❤️ Здоровье - " + str(user['health']) + '/' + str(user['max_health']) + "\n" "🍪 Печеньки(валюта) - " + str(user['cookies']) + "\n" + "🍟 Еда - " + str(user['food']) + "\n" + "💧 Вода - " + str(user['water']) + "\n" + "📃 Уголки - " + str(user['corners']) + "\n" + "😄 Веселье - " + str(
+    text += "Имя:" + user['name'] + '\n' + "❤️ Здоровье - " + str(user['health']) + '/' + str(user['max_health']) + "\n" "🍪 Печеньки(валюта) - " + str(user['cookies']) + "\n" + "🍟 Еда - " + str(user['food']) + "\n" + "💧 Вода - " + str(user['water']) + "\n" + "📃 Уголки - " + str(user['corners']) + "\n" + "😄 Веселье - " + str(
         user['fun']) + "\n" + "🏘 Локация - " + str(user['location']) + "\n" + "🫂 Репутация - " + str(user['reputation']) + "\n" + "🎒 инвентарь - " + ', '.join(user['inventory']) + "\n" + "👨‍🏫 знания - " + str(user['knowledge'])
     bot.send_message(user['id'], text)
 
@@ -95,6 +95,7 @@ def give_stats(user, bot):
 def save_data():
     with open('save.json', 'w', encoding='utf-8') as f:
         json.dump([users, locations], f, ensure_ascii=False, indent=4)
+
 
 def restart(message):
     from modules import available_modules
@@ -105,4 +106,5 @@ def restart(message):
     add_user(message)
     user = users[str(message.from_user.id)]
     move_player(bot, user, "choice")
-    bot.send_message(user["id"], "Ты проиграл или умер\nПридется начать все заного")
+    bot.send_message(
+        user["id"], "Ты потерял все уголки или умер\nПридется начать все заного")
