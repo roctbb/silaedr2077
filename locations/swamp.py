@@ -1,7 +1,7 @@
 import random
 import helpers
 import time
-buttons = [['продажа', 'топиться'],['вылезти', 'ловить','выход']]
+buttons = [['продать', 'Топиться'],['вылезти', 'Ловить','выход']]
 but = helpers.create_keyboard(buttons, rowsWidth=2)
 def enter(bot, user, all_users, location):
     realtime = time.localtime() 
@@ -19,7 +19,7 @@ def enter(bot, user, all_users, location):
         location["usersData"][user["id"]]["enters"] += 1
         location["usersData"][user["id"]]["lastEnter"] = current_time
 
-    bot.send_photo(user["id"], open("assets/swamp/Swamp.png", "rb"), caption = "Вы вошли на болото. Здесь вы можете обменять Ирине Николаевне пойманых вами организмов с помощью 'продажа', а так же ловить эти организмы, утопившись в болоте с помощью 'топиться' ", reply_markup=but)
+    bot.send_photo(user["id"], open("assets/swamp/Swamp.png", "rb"), caption = "Вы вошли на болото. Здесь вы можете обменять Ирине Николаевне пойманых вами организмов с помощью 'продать', а так же ловить эти организмы, утопившись в болоте с помощью 'топиться' ", reply_markup=but)
 
 def leave(bot, user, all_users, location):
     pass
@@ -60,10 +60,10 @@ catches = [ {   "name": "Веснянка",
                 "fun": 1
             }]
 def message(bot, message, user, all_users, location):
-    if message.text == "топиться":
+    if message.text == "Топиться":
         user["action"] = "drowning"
-        bot.send_message(user["id"], "Вы начали топиться в болоте. Можете прописать 'ловить', чтобы поймать кого-то, или 'вылезти', чтобы перестать топиться", reply_markup=but)
-    elif message.text == "ловить":
+        bot.send_message(user["id"], "Вы начали топиться в болоте. Можете прописать 'Ловить', чтобы поймать кого-то, или 'вылезти', чтобы перестать топиться", reply_markup=but)
+    elif message.text == "Ловить":
         if user["action"] == "drowning":
             if not location["usersData"][user["id"]]["wait"]:
                 if location["usersData"][user["id"]]["cathcing"]>=10:
@@ -87,7 +87,7 @@ def message(bot, message, user, all_users, location):
                     bot.send_message(user["id"], "Ловить живность можно раз в 10 секунд", reply_markup=but)
         else:
             bot.send_message(user["id"], "Сначала нужно утопиться", reply_markup=but)
-    elif message.text == "продажа":
+    elif message.text == "продать":
         if user["action"] != "drowning":
             
             length_of_sell=0
