@@ -9,21 +9,10 @@ playmarkup = helpers.create_keyboard([["Серия пенальти(2 игрок
 
 
 def enter(bot, user, all_users, location):
-    location["usersData"][user["id"]] = {
-        "penaltyGameConnection": None, 
-        "stage": 0, 
-        "defChoice": [], 
-        "attackChoice": 0, 
-        "turn": -1, 
-        "score": [0, 0],
-        "wait": False, 
-        "buyItem": [], 
-        "sellItem": []
-    }
     if user["id"] not in location["players"]:
-        bot.send_message(user["id"], f"Приветствуем на спорт площадке!\n Сейчас здесь находится {len(all_users)} людей.", reply_markup=basemarkup)
-    else:
-        bot.send_message(user["id"], f"С возвращением\nИгроков на спорте: {len(all_users)}, удачной игры!", reply_markup=basemarkup)
+        bot.send_photo(user["id"], open("assets/sport_ground/sport_ground.jpg", "rb"), caption="Приветствуем на спорт площадке!\n Сейчас здесь находится"+str({len(all_users)})+"людей.", reply_markup=basemarkup)  
+    else:        
+        bot.send_photo(user["id"], open("assets/sport_ground/sport_ground.jpg", "rb"), caption="С возвращением\nИгроков: "+str({len(all_users)})+", удачной игры!", reply_markup=basemarkup)
 
 def leave(bot, user, all_users, location):
     pass
