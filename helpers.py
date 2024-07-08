@@ -65,6 +65,9 @@ def move_player(bot, user, location: str):
             user["location"] = location
             module = get_module(user)
             all_users = get_neighbours(user)
+            if location != "choice":
+                names = '\n' + '\n'.join([usr['name'] for usr in all_users if usr['id'] != user['id']]) if len(all_users) > 1 else 'никого нет'
+                bot.send_message(user["id"], "Вы переходите в " + location + " с вами на локации " + names)
             module.enter(bot, user, all_users, locations[user['location']])
 
 
