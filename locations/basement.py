@@ -48,7 +48,7 @@ def checkShielder(bot, message, user, all_users, location):
     if location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["attackChoice"] in location["usersData"][user["id"]]["shieldChoice"]:
         score = [location["usersData"][user["id"]]["score"][0], location["usersData"][user["id"]]["score"][1]]
         bot.send_message(user["id"], f"Ты успешно отбил удар\nСчет {score[0]}:{score[1]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
-        bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Противник отбил твой удар\nсчет {score[1]}:{score[0]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
+        bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Противник отбил твой удар\nсчет {score[1]}:{score[0]}\nТеперь ты защищаешься", reply_markup=tennisgamemarkup)
         location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
     else:
         if location["usersData"][user["id"]]["score"][1] + 1 == 5:
@@ -68,13 +68,13 @@ def checkShielder(bot, message, user, all_users, location):
             score = [location["usersData"][user["id"]]["score"][0], location["usersData"][user["id"]]["score"][1]]
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["score"][0] += 1
             bot.send_message(user["id"], f"Тебе забили\nСчет {score[0]}:{score[1]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
-            bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Ты забил\nСчет {score[1]}:{score[0]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
+            bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Ты забил\nСчет {score[1]}:{score[0]}\nТеперь ты защищаешься", reply_markup=tennisgamemarkup)
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 
 def checkAttacker(bot, message, user, all_users, location=None):
     if location["usersData"][user["id"]]["attackChoice"] in location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["shieldChoice"]:
         score = [location["usersData"][user["id"]]["score"][0], location["usersData"][user["id"]]["score"][1]]
-        bot.send_message(user["id"], f"Противник отбил твой удар\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешься", reply_markup=tennisgamemarkup)
+        bot.send_message(user["id"], f"Противник отбил твой удар\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешьсяся", reply_markup=tennisgamemarkup)
         bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Ты успешно отбил удар\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
         location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
     else:
@@ -94,7 +94,7 @@ def checkAttacker(bot, message, user, all_users, location=None):
             location["usersData"][user["id"]]["score"][0] += 1
             score = [location["usersData"][user["id"]]["score"][0], location["usersData"][user["id"]]["score"][1]]
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["score"][1] += 1
-            bot.send_message(user["id"], f"Ты попал!\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешь", reply_markup=tennisgamemarkup)
+            bot.send_message(user["id"], f"Ты попал!\nСчет {score[0]}:{score[1]}\nТеперь ты защищаешься", reply_markup=tennisgamemarkup)
             bot.send_message(location["usersData"][user["id"]]["playtennisConnection"]["id"], f"Тебе забили\nСчет {score[1]}:{score[0]}\nТеперь ты атакуешь", reply_markup=tennisgamemarkup)
             location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 def message(bot, message, user, all_users, location=None):
@@ -144,7 +144,7 @@ def message(bot, message, user, all_users, location=None):
                             users[location["usersData"][user["id"]]["buyItem"][0]]["cookies"] += location["usersData"][user["id"]]["buyItem"][2]
                             bot.send_message(location["usersData"][user["id"]]["buyItem"][0], f"У тебя купили {text1} за {text2}🍪")
                     else:
-                        bot.send_message(user["id"], "Предмет уже кто-то купил :(", reply_markup=basemarkup)
+                        bot.send_message(user["id"], "Этот предмет уже кто-то купил :(", reply_markup=basemarkup)
                         location["usersData"][user["id"]]["stage"] = 0
                     
 
@@ -246,7 +246,7 @@ def message(bot, message, user, all_users, location=None):
                     location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["playtennisConnection"] = None
                     location["usersData"][user["id"]]["playtennisConnection"] = None
                 else:
-                    bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ожидай оппонента или нажми 'Выйти'")
+                    bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Ожидай противника или нажми 'Выйти'")
             # choosing
             if location["usersData"][user["id"]]["stage"] == 4:
                 if location["usersData"][user["id"]]["turn"] == -1:
@@ -291,7 +291,7 @@ def message(bot, message, user, all_users, location=None):
                     location["usersData"][user["id"]]["stage"] = 0
                     bot.send_photo(user["id"], open("assets/basement/base.jpg", "rb"), caption="Вы вышли в главное меню", reply_markup=basemarkup)
                     location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 0
-                    bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/base.jpg", "rb"), caption=f"Ваш оппонент отозвал предложение", reply_markup=basemarkup)
+                    bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/base.jpg", "rb"), caption=f"Ваш противник отозвал предложение", reply_markup=basemarkup)
                     location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["playtennisConnection"] = None
                     location["usersData"][user["id"]]["playtennisConnection"] = None
                 else:
@@ -309,7 +309,7 @@ def message(bot, message, user, all_users, location=None):
                 else:
                     bot.send_photo(user["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Начинаем игру!", reply_markup=tennisgamemarkup)
                     location["usersData"][user["id"]]["stage"] = 4
-                    bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Оппонент согласен, начинаем игру!", reply_markup=tennisgamemarkup)
+                    bot.send_photo(location["usersData"][user["id"]]["playtennisConnection"]["id"], open("assets/basement/ping-pong.jpg", "rb"), caption="Противник согласен, начинаем игру!", reply_markup=tennisgamemarkup)
                     location["usersData"][location["usersData"][user["id"]]["playtennisConnection"]["id"]]["stage"] = 4
 
                     # game starting
