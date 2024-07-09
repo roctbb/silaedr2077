@@ -74,7 +74,7 @@ def message(bot, message, user, all_users, location):
     elif message.text == "Ловить":
         if user["action"] == "drowning":
             if not location["usersData"][user["id"]]["wait"]:
-                if location["usersData"][user["id"]]["cathcing"] >= 10:
+                if location["usersData"][user["id"]]["cathcing"] <= 10:
                     location["usersData"][user["id"]]["wait"] = True
                     bot.send_message(
                         user["id"], "Вы начинаете ловить кого то в болоте.", reply_markup=but)
