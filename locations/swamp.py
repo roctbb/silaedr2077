@@ -76,7 +76,7 @@ def message(bot, message, user, all_users, location):
 
             if not location["usersData"][user["id"]]["wait"]:
 
-                if location["usersData"][user["id"]]["catching"] >= 10:
+                if location["usersData"][user["id"]]["catching"] <= 10:
                     location["usersData"][user["id"]]["wait"] = True
                     bot.send_message(
                         user["id"], "Вы начинаете ловить кого то в болоте.", reply_markup=but)
@@ -98,13 +98,13 @@ def message(bot, message, user, all_users, location):
                     bot.send_message(
                         user["id"], "Нельзя ловить на болоте больше 10 раз за день! Вы так замерзните!", reply_markup=but)
             else:
-                if random.randint(0, 5) == 0:
-                    bot.send_message(
-                        user["id"], "Ловить живность можно раз в 10 секунд", reply_markup=but)
+                # if random.randint(0, 5) == 0:
+                bot.send_message(
+                    user["id"], "Ловить живность можно раз в 10 секунд", reply_markup=but)
         else:
             bot.send_message(
                 user["id"], "Сначала нужно утопиться", reply_markup=but)
-    elif message.text == "продаnm":
+    elif message.text == "продать":
         if user["action"] != "drowning":
 
             length_of_sell = 0
