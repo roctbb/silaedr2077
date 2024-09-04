@@ -18,8 +18,8 @@ except:
         "basement": {
             "usersData": {},
             "StoreOffers": {
-                #OffererId: [[itemName, costValue(cookies)], ...]
-                "-1" : []
+                # OffererId: [[itemName, costValue(cookies)], ...]
+                "-1": []
             }
         },
         "forest": {
@@ -42,9 +42,8 @@ except:
         'first_aid_station': {
             "usersData": {}
         }
+
     }
-
-
 
 
 rooms = {
